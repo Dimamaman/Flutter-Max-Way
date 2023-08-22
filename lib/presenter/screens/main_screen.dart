@@ -25,12 +25,24 @@ class _MainScreenState extends State<MainScreen> {
   final pref = LocationPref();
   var haveLocation = false;
   var locationName = '';
+  var searchValueEmpty = false;
 
   @override
   void initState() {
     print("PPPPPPPPPPP");
-    bloc.add(LoadFoodEvent(null));
+    bloc.add(LoadFoodEvent());
     getLocation();
+
+    _searchController.addListener(() {
+      if(_searchController.text.isEmpty) {
+        searchValueEmpty = true;
+        bloc.add(LoadFoodEvent());
+      } else {
+        searchValueEmpty = false;
+        bloc.add(SearchFoodEvent(_searchController.text));
+      }
+    });
+
     super.initState();
   }
 
@@ -50,6 +62,9 @@ class _MainScreenState extends State<MainScreen> {
       setState(() {});
       print("RRRRRRRRRRRRRRRRR");
     }
+
+    var selectedCategories = <String>[];
+
     return BlocBuilder<FoodBloc, FoodState>(
       bloc: bloc,
       builder: (context, state) {
@@ -135,6 +150,7 @@ class _MainScreenState extends State<MainScreen> {
                               ),
                             ),
                           )),
+
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
@@ -177,45 +193,92 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                   ),
                 ),
+
+                const SizedBox(height: 10,),
+
                 SizedBox(
-                  height: 50,
-                  child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: ListView.builder(
-                          itemCount: state.list.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (_, index) {
-                            final category = state.list[index];
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
-                              child: Container(
+                  height: 40,
+                  child: Builder(
+                    builder: (context) {
+                      if(state.status == EnumStatus.loading && state.list.isEmpty) {
+                        return ListView.separated(
+                            itemCount: 10,
+                            separatorBuilder: (context, index) => SizedBox(width: 10),
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                            itemBuilder: (_, index) {
+                              return Container(
+                                height: 40,
+                                width: 150,
+                                clipBehavior: Clip.antiAlias,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: const Color(0xFFFFFFFF),
                                 ),
-                                child: Center(
-                                    child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(category.title.uz),
-                                )),
+                                child: Shimmer.fromColors(
+                                    baseColor: Colors.grey.withOpacity(0.1),
+                                    highlightColor: Colors.grey.withOpacity(0.3),
+                                    child: Container(
+                                      color: Colors.white,
+                                    ),
+                                ),
+                              );
+                            });
+                      }
+                      return ListView.builder(
+                          itemCount: state.categoryTitle.length,
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                          itemBuilder: (_, index) {
+                            final category = state.categoryTitle[index];
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: GestureDetector(
+                                onTap: () {
+                                  if(selectedCategories.contains(category)) {
+                                    selectedCategories.remove(category);
+                                  } else {
+                                    selectedCategories.add(category);
+                                  }
+
+                                  if(selectedCategories.isEmpty) {
+                                    bloc.add(LoadFoodEvent());
+                                  }
+
+                                  bloc.add(SearchByTitleEvent(selectedCategories));
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: selectedCategories.contains(category)
+                                        ? Colors.indigo[500]
+                                        : Colors.white
+                                  ),
+                                  child: Center(
+                                      child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(category),
+                                  )),
+                                ),
                               ),
                             );
-                          })),
+                          });
+                    }
+                  ),
                 ),
+
                 Expanded(
-                  child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: ListView.separated(
-                        separatorBuilder: (__, _) => const SizedBox(
-                          height: 15,
-                        ),
-                        itemCount: state.list.length,
-                        itemBuilder: (_, i) {
-                          final category = state.list[i];
-                          return CategoryItem(category: category);
-                        },
-                      )),
+                  child: ListView.separated(
+                    separatorBuilder: (__, _) => const SizedBox(
+                      height: 15,
+                    ),
+                    itemCount: state.list.length,
+                    itemBuilder: (_, i) {
+                      final category = state.list[i];
+                      return CategoryItem(category: category);
+                    },
+                  ),
                 ),
               ],
             ),
