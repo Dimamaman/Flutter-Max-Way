@@ -59,7 +59,6 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
     try {
       if (searchValue != null) {
         var list = <Product>[];
-        var title = '';
 
         for (Category category in await _api.getProducts()) {
           for (Product product in category.products) {
@@ -71,7 +70,7 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
 
         emit(state.copyWith(
           status: EnumStatus.success,
-          list: <Category>[Category.empty(title: title, products: list)],
+          list: <Category>[Category.empty(products: list)],
         ));
       }
     } catch (e) {
@@ -92,7 +91,6 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
         for(Category category in allList) {
           for(int i = 0; i < searchCategories.length;i++) {
             if(searchCategories[i] == category.title.uz) {
-              print("WWWWWWWWW ${searchCategories[i]},,,,,, ${category.title.uz}");
               list.add(category);
             }
           }

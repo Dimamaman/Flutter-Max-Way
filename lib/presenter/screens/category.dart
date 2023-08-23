@@ -23,18 +23,21 @@ class CategoryItem extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: Colors.white70
+              color: const Color(0xFFF8F8F8)
             ),
             height: category.products.length * 90 + 75,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(category.title.uz, style: const TextStyle(fontSize: 21, fontWeight: FontWeight.bold),),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: Text(category.title.uz, style: const TextStyle(fontSize: 21, fontWeight: FontWeight.bold),),
+                ),
                 const SizedBox(height: 10,),
                 SizedBox(
                   height: category.products.length * 90 + 15,
                   child: ListView.separated(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: category.products.length,
                     separatorBuilder: (BuildContext context, int index) => const Divider(thickness: 0.5,height: 6.6),
                     itemBuilder: (_, ind) {

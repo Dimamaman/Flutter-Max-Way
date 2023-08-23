@@ -53,7 +53,7 @@ class ProductItem extends StatelessWidget {
                         width: 30,
                         child: CircularProgressIndicator(
                           strokeWidth: 3,
-                          color: Colors.grey,
+                          color: Colors.white,
                           value: loadingProgress.expectedTotalBytes != null
                               ? loadingProgress.cumulativeBytesLoaded /
                               loadingProgress.expectedTotalBytes!

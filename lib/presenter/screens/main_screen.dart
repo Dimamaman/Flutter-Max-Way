@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_max_way/core/model/model.dart';
 import 'package:flutter_max_way/presenter/bloc/food_bloc.dart';
 import 'package:flutter_max_way/presenter/pref/location_pref.dart';
+import 'package:flutter_max_way/presenter/screens/product_search.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../core/api/food_api.dart';
@@ -29,7 +30,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
-    print("PPPPPPPPPPP");
     bloc.add(LoadFoodEvent());
     getLocation();
 
@@ -47,7 +47,6 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Future<void> getLocation() async {
-    print("HHHHHHHHHHHHHHHHHHHHH");
     haveLocation = await pref.getIsFirst();
     locationName = await pref.getPosition();
     setState(() {});
@@ -57,19 +56,18 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     if(widget.a) {
       setState(() {});
-      print("TTTTTTTTTTTTTTTTTTTT");
     } else {
       setState(() {});
-      print("RRRRRRRRRRRRRRRRR");
     }
 
     var selectedCategories = <String>[];
+
 
     return BlocBuilder<FoodBloc, FoodState>(
       bloc: bloc,
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: const Color(0xFFF8F8F8),
+          backgroundColor: const Color(0xFFFFFFFF),
           body: SafeArea(
             child: Column(
               children: [
@@ -157,7 +155,7 @@ class _MainScreenState extends State<MainScreen> {
                     height: 40,
                     width: double.infinity,
                     decoration: ShapeDecoration(
-                      color: const Color(0xFFFFFFFF),
+                      color: const Color(0xFFF8F8F8),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -194,7 +192,7 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                 ),
 
-                const SizedBox(height: 10,),
+                const SizedBox(height: 10),
 
                 SizedBox(
                   height: 40,
@@ -203,7 +201,7 @@ class _MainScreenState extends State<MainScreen> {
                       if(state.status == EnumStatus.loading && state.list.isEmpty) {
                         return ListView.separated(
                             itemCount: 10,
-                            separatorBuilder: (context, index) => SizedBox(width: 10),
+                            separatorBuilder: (context, index) => const SizedBox(width: 10),
                             scrollDirection: Axis.horizontal,
                             padding: const EdgeInsets.symmetric(horizontal: 5.0),
                             itemBuilder: (_, index) {
@@ -252,13 +250,15 @@ class _MainScreenState extends State<MainScreen> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: selectedCategories.contains(category)
-                                        ? Colors.indigo[500]
-                                        : Colors.white
+                                        ? const Color(0xFF51267D)
+                                        : Color(0xFFF8F8F8)
                                   ),
                                   child: Center(
                                       child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text(category),
+                                    child: Text(category,style: TextStyle(color: selectedCategories.contains(category)
+                                        ? Colors.white
+                                        : Colors.black),),
                                   )),
                                 ),
                               ),
@@ -269,15 +269,95 @@ class _MainScreenState extends State<MainScreen> {
                 ),
 
                 Expanded(
-                  child: ListView.separated(
-                    separatorBuilder: (__, _) => const SizedBox(
-                      height: 15,
-                    ),
-                    itemCount: state.list.length,
-                    itemBuilder: (_, i) {
-                      final category = state.list[i];
-                      return CategoryItem(category: category);
-                    },
+                  child: Builder(
+                    builder: (context) {
+
+                      if(state.status == EnumStatus.loading ) {
+                        return SizedBox(
+                          height: 200,
+                          width: double.infinity,
+                          child: ListView.separated(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            separatorBuilder: (__, _) => const SizedBox(
+                              height: 15,
+                            ),
+                            itemCount: 10,
+                            itemBuilder: (_, i) {
+                              return SizedBox(
+                                width: double.infinity,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Shimmer.fromColors(
+                                      baseColor: Colors.grey.withOpacity(0.1),
+                                      highlightColor: Colors.grey.withOpacity(0.3),
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20),
+                                            color: Colors.white70
+                                        ),
+                                        height: 100,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              height: 100,
+                                              child: ListView.separated(
+                                                physics: const NeverScrollableScrollPhysics(),
+                                                itemCount: 5,
+                                                separatorBuilder: (BuildContext context, int index) => const Divider(thickness: 0.5,height: 6.6),
+                                                itemBuilder: (_, ind) {
+                                                  return InkWell(
+                                                      onTap: () {
+
+                                                      },
+                                                      highlightColor: Colors.green,
+                                                      child: Container(
+                                                        width: double.infinity,
+                                                      )
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      }
+
+
+                      if(_searchController.text.isNotEmpty) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ListView.separated(
+                            separatorBuilder: (_, index) => const SizedBox(height: 10),
+                            itemCount: state.list[0].products.length,
+                            itemBuilder: (_, index) {
+                              final product = state.list[0].products[index];
+                              return ProductSearchItem(product: product);
+                          }),
+                        );
+                      }
+
+                      return ListView.separated(
+                        padding: EdgeInsets.only(bottom: 10),
+                        separatorBuilder: (__, _) => const SizedBox(
+                          height: 15,
+                        ),
+                        itemCount: state.list.length,
+                        itemBuilder: (_, i) {
+                          final category = state.list[i];
+                          return CategoryItem(category: category);
+                        },
+                      );
+                    }
                   ),
                 ),
               ],
