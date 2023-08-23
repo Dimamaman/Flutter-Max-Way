@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/pref/location_pref.dart';
+import 'package:flutter_max_way/presenter/screens/home_page.dart';
 import 'package:flutter_max_way/presenter/screens/main_screen.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -186,7 +187,7 @@ class _Map_PageState extends State<Map_Page> {
                         Navigator.pop(context);
                         Navigator.pushReplacement(context,
                             MaterialPageRoute(builder: (context) {
-                              return MainScreen(a: true);
+                              return Home_Page(a: true);
                             }));
                       },
                       child: Container(
@@ -199,7 +200,7 @@ class _Map_PageState extends State<Map_Page> {
                         ),
                         child: const Center(
                           child: Text(
-                            'Подтвердить',
+                            'Confirm',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.white,
