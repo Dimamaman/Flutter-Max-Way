@@ -1,4 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_max_way/presenter/screens/auth/phone.dart';
+import 'package:flutter_max_way/presenter/screens/auth/verify.dart';
 import 'package:flutter_max_way/presenter/screens/main_screen.dart';
 import 'package:flutter_max_way/presenter/screens/splash_screen.dart';
 import 'package:hive/hive.dart';
@@ -16,6 +19,9 @@ void main() async {
   // final appDocumentDirectory = await getApplicationDocumentsDirectory();
   // Hive.init(appDocumentDirectory.path);
   // await setUpDatabase();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 
@@ -27,11 +33,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      initialRoute: 'phone',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: SplashScreen()
+      routes: {
+        'phone': (context) => MyPhone(),
+        'verify': (context) => MyVerify()
+      },
     );
   }
 }
