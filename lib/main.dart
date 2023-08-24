@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/screens/main_screen.dart';
+import 'package:flutter_max_way/presenter/screens/splash_screen.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
+
+
+final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
   AndroidYandexMap.useAndroidViewSurface = false;
@@ -19,7 +23,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MainScreen()
+      home: SplashScreen()
     );
   }
 }

@@ -1,12 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_max_way/presenter/screens/details_page.dart';
+import 'package:flutter_max_way/presenter/screens/map_page.dart';
 
 import '../../core/model/model.dart';
 import 'product.dart';
 
 class CategoryItem extends StatelessWidget {
+  final bool isFirst;
   const CategoryItem({
     super.key,
     required this.category,
+    required this.isFirst
   });
 
   final Category category;
@@ -23,7 +28,7 @@ class CategoryItem extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: const Color(0xFFF8F8F8)
+              color: const Color(0xFFEFEFEF)
             ),
             height: category.products.length * 90 + 75,
             child: Column(
@@ -44,7 +49,8 @@ class CategoryItem extends StatelessWidget {
                       final product = category.products[ind];
                       return InkWell(
                           onTap: () {
-                            print("BBBBBBBB ${product.title.uz}");
+                            isFirst ? Navigator.push(context, CupertinoPageRoute(builder: (context) => const Map_Page())) :
+                            Navigator.push(context, CupertinoPageRoute(builder: (context) => DetailPage(product: product)));
                           },
                           highlightColor: Colors.green,
                           child: ProductItem(product: product)

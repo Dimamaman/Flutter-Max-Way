@@ -183,7 +183,7 @@ class _Map_PageState extends State<Map_Page> {
                     GestureDetector(
                       onTap: () {
                         pref.setPosition(locationName);
-                        pref.setIsFirst(true);
+                        pref.setIsFirst(false);
                         Navigator.pop(context);
                         Navigator.pushReplacement(context,
                             MaterialPageRoute(builder: (context) {

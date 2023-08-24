@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_max_way/presenter/screens/details_page.dart';
+import 'package:flutter_max_way/presenter/utils/navigator.dart';
 
 import '../../core/model/model.dart';
 
@@ -24,7 +26,8 @@ class ProductSearchItem extends StatelessWidget {
       height: 70,
       child: InkWell(
         onTap: () {
-
+          // push(DetailPage(product: product));
+          Navigator.push(context, MaterialPageRoute(builder: (_) => DetailPage(product: product)));
         },
         child: Row(
           children: [
