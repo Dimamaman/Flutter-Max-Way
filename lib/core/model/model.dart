@@ -67,6 +67,19 @@ class Product {
     );
   }
 
+  Map<String,dynamic> toJson() {
+    Map<String, dynamic> map = {};
+
+    map['id'] = id;
+    map['price'] = price;
+    map['currency'] = currency;
+    map['image'] = image;
+    map['title'] = title;
+    map['description'] = description;
+
+    return map;
+  }
+
   factory Product.empty() => Product._(
     id: '',
     price: 0,

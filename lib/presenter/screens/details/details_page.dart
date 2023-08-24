@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_max_way/core/model/model.dart';
+import 'package:flutter_max_way/core/model/product_data.dart';
+import 'package:flutter_max_way/presenter/screens/details/details_bloc.dart';
+
+import '../../../core/di/hive_module.dart';
 // import 'package:share_plus/share_plus.dart';
 
 const BUTTON_ADD = "Add";
@@ -17,8 +21,6 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   late ScrollController _scrollController;
   bool lastStatus = true;
-
-
 
   _scrollListener() {
     if (isShrink != lastStatus) {
@@ -38,7 +40,7 @@ class _DetailPageState extends State<DetailPage> {
 
   void inc() {
     productCount++;
-    if(buttonText == "To Cart") {
+    if (buttonText == "To Cart") {
       buttonText = "Add";
     }
     setState(() {});
@@ -46,14 +48,17 @@ class _DetailPageState extends State<DetailPage> {
 
   void dec() {
     productCount--;
-    if(buttonText == "To Cart") {
+    if (buttonText == "To Cart") {
       buttonText = "Add";
     }
     setState(() {});
   }
 
+  // late DetailsBloc bloc;
+
   @override
   void initState() {
+    // bloc = getIt.get<DetailsBloc>();
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     super.initState();
@@ -166,20 +171,20 @@ class _DetailPageState extends State<DetailPage> {
                               children: [
                                 IconButton(
                                     onPressed: productCount > 1 ? dec : null,
-                                    icon: const Icon(Icons.remove)
-                                ),
+                                    icon: const Icon(Icons.remove)),
                                 SizedBox(
                                   width: 20,
-                                  child: Center(child: Text(productCount.toString()),),
+                                  child: Center(
+                                    child: Text(productCount.toString()),
+                                  ),
                                 ),
                                 IconButton(
                                     onPressed: inc,
-                                    icon: const Icon(Icons.add)
-                                ),
+                                    icon: const Icon(Icons.add)),
                               ],
                             ),
                           ),
-                           Text(
+                          Text(
                             "${widget.product.price * productCount} so'm",
                             style: const TextStyle(
                                 color: Colors.black,
@@ -191,7 +196,23 @@ class _DetailPageState extends State<DetailPage> {
                       const SizedBox(height: 20),
                       InkWell(
                         onTap: () {
-                          if(buttonText == "Add") {
+                          if (buttonText == "To Cart") {
+                            // bloc.add(AddProduct(
+                            //     product: ProductData(
+                            //         id: widget.product.id,
+                            //         price: widget.product.price,
+                            //         currency: widget.product.currency,
+                            //         image: widget.product.image,
+                            //         title: DescriptionData(
+                            //             uz: widget.product.title.uz),
+                            //         description: DescriptionData(
+                            //             uz: widget.product.description.uz)
+                            //     )
+                            // )
+                            // );
+                          }
+
+                          if (buttonText == "Add") {
                             buttonText = "To Cart";
                             setState(() {});
                           }
@@ -202,10 +223,11 @@ class _DetailPageState extends State<DetailPage> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: const Color(0xFF51267D)),
-                            child:  Center(
+                            child: Center(
                                 child: Text(
                               buttonText,
-                              style: TextStyle(color: Colors.white, fontSize: 18),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 18),
                             ))),
                       ),
                     ],

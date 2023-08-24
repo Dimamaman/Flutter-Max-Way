@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_max_way/presenter/screens/details_page.dart';
+import 'package:flutter_max_way/presenter/screens/details/details_page.dart';
 import 'package:flutter_max_way/presenter/screens/map_page.dart';
 
 import '../../core/model/model.dart';
