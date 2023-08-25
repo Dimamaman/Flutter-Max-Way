@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/screens/auth/verify.dart';
 import 'package:flutter_max_way/presenter/screens/main_screen.dart';
 
-import '../home_page.dart';
+import '../home/home_page.dart';
 import '../splash/splash_screen.dart';
 
 class MyPhone extends StatefulWidget {
@@ -28,6 +28,7 @@ class _MyPhoneState extends State<MyPhone> {
   }
 
   var phone = '';
+  var name = '';
 
   @override
   Widget build(BuildContext context) {
@@ -78,10 +79,39 @@ class _MyPhoneState extends State<MyPhone> {
                       const SizedBox(
                         width: 10,
                       ),
+                      Expanded(
+                          child: TextField(
+                        style: TextStyle(color: Colors.white),
+                        keyboardType: TextInputType.text,
+                        onChanged: (value) {
+                          name = value;
+                        },
+                        decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Name",
+                            hintStyle: TextStyle(color: Colors.white)),
+                      ))
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  height: 55,
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        width: 10,
+                      ),
                       SizedBox(
                         width: 40,
                         child: TextField(
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                           controller: countryController,
                           keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
@@ -98,15 +128,15 @@ class _MyPhoneState extends State<MyPhone> {
                       ),
                       Expanded(
                           child: TextField(
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         keyboardType: TextInputType.phone,
                         onChanged: (value) {
                           phone = value;
                         },
                         decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "Phone",
-                        ),
+                            border: InputBorder.none,
+                            hintText: "Phone",
+                            hintStyle: TextStyle(color: Colors.white)),
                       ))
                     ],
                   ),
@@ -123,7 +153,7 @@ class _MyPhoneState extends State<MyPhone> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10))),
                       onPressed: () async {
-                        phone.length == 9
+                        phone.length == 9 && name.isNotEmpty
                             ? await FirebaseAuth.instance.verifyPhoneNumber(
                                 phoneNumber: countryController.text + phone,
                                 verificationCompleted:
@@ -143,7 +173,10 @@ class _MyPhoneState extends State<MyPhone> {
                                 codeSent:
                                     (String verificationId, int? resendToken) {
                                   MyPhone.verify = verificationId;
-                                  Navigator.push(context, CupertinoPageRoute(builder: (_) => const MyVerify()));
+                                  Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                          builder: (_) => MyVerify(name: name,phone: phone,)));
                                 },
                                 codeAutoRetrievalTimeout:
                                     (String verificationId) {},
@@ -161,7 +194,8 @@ class _MyPhoneState extends State<MyPhone> {
         ),
       ),
       onWillPop: () async {
-        Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => MainScreen()));
+        Navigator.pushReplacement(
+            context, CupertinoPageRoute(builder: (_) => MainScreen()));
         print("WWWWWWWWWWW onWillPop");
         return true;
       },

@@ -4,22 +4,31 @@ import 'package:hive/hive.dart';
 import '../model/product_data.dart';
 
 class HiveHelper {
-  static const String boxName = "foods";
 
-  Box box;
+  final Box _box;
 
-  HiveHelper(this.box);
+  HiveHelper(this._box);
 
   Future<void> addProduct(ProductData product) async {
-    return await box.put(product.id, product.toJson());
+    await _box.add(product);
   }
 
-  Future<void> deleteProduct(ProductData product) async {
-    return await box.delete(product.id);
+  ProductData? _readProduct(int key) {
+    final item = _box.get(key);
+    return item;
+  }
+
+  Future<void> updateItem(int itemKey, ProductData item) async {
+    await _box.put(itemKey, item);
+  }
+
+  Future<void> deleteProduct(String product) async {
+    // return await _box.delete(product.id);
+    await _box.delete(product);
   }
 
   Future<List<ProductData>> getAllProducts() async {
-    return (box.values).map((e) => ProductData.fromJson(e)).toList();
+    return (_box.values).map((e) => ProductData.fromJson(e as Map<String, dynamic>)).toList();
   }
 
 }

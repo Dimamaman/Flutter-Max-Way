@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_max_way/presenter/screens/home_page.dart';
+import 'package:flutter_max_way/presenter/screens/home/home_page.dart';
+import 'package:flutter_max_way/presenter/screens/main_screen.dart';
 
 import '../../pref/location_pref.dart';
 
@@ -62,7 +63,7 @@ class _SelectLangState extends State<SelectLang> {
                   onTap: () async {
                     await Future.delayed(const Duration(milliseconds: 50));
                     pref.setLang(true);
-                    Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => Home_Page(a: false)));
+                    Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => MainScreen()));
                   },
                   child: Container(
                     width: double.infinity,

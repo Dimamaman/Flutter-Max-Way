@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/screens/auth/phone.dart';
-import 'package:flutter_max_way/presenter/screens/home_page.dart';
+import 'package:flutter_max_way/presenter/screens/home/home_page.dart';
 
 import '../../pref/location_pref.dart';
 
@@ -13,27 +13,39 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
   final pref = LocationPref();
   bool isLogged = false;
+  String name = '';
+  String phone = '';
 
   Future<void> next() async {
     isLogged = await pref.getIsLogged();
+    name = await pref.getName();
+    print("VVVVVVVVVV $name");
+    phone = await pref.getPhone();
+    print("VVVVVVVVVV $phone");
+
+    // await Future.delayed(const Duration(milliseconds: 2000));
   }
 
   @override
   void initState() {
-    next().then((value) =>
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => isLogged == true ? const ProfileScreen() : const MyPhone()))
-    );
+    print("NNNNNNNNNNN Profile initState");
+    next();
+    // next().then((value) =>
+    //     Navigator.pushReplacement(
+    //         context, MaterialPageRoute(builder: (_) => isLogged == true ? const ProfileScreen() : const MyPhone()))
+    // );
 
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
+    /*next().then((value) =>
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (_) => isLogged == true ? const ProfileScreen() : const MyPhone()))
+    );*/
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -61,16 +73,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Samandar',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                      Text(
+                        "$name",
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.01,
                       ),
                       Text(
-                        '+998 90 033 44 07',
+                        "${phone}",
                         style: TextStyle(fontSize: 17, color: Colors.grey[700]),
                       ),
                     ],
@@ -101,9 +113,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.place_outlined, size: 30,),
-                          SizedBox(width: 10,),
-                          Expanded(child: Text('Mening manzillarim',
+                          Icon(
+                            Icons.place_outlined,
+                            size: 30,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                              child: Text(
+                            'Mening manzillarim',
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           )),
@@ -112,13 +131,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             size: 15,
                             color: Colors.grey,
                           ),
-                          SizedBox(width: 5,)
+                          SizedBox(
+                            width: 5,
+                          )
                         ],
                       ),
                     ),
                   ),
-                  const Divider(height: 1,),
-
+                  const Divider(
+                    height: 1,
+                  ),
                   InkWell(
                     onTap: () {},
                     child: Container(
@@ -126,8 +148,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(CupertinoIcons.map_pin_ellipse, size: 30,),
-                          SizedBox(width: 10,),
+                          Icon(
+                            CupertinoIcons.map_pin_ellipse,
+                            size: 30,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
                           Expanded(
                               child: Text(
                             'Filiallar',
@@ -139,14 +166,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             size: 15,
                             color: Colors.grey,
                           ),
-                          SizedBox(width: 5,)
+                          SizedBox(
+                            width: 5,
+                          )
                         ],
                       ),
                     ),
                   ),
-
-                  const Divider(height: 1,),
-
+                  const Divider(
+                    height: 1,
+                  ),
                   InkWell(
                     onTap: () {},
                     child: SizedBox(
@@ -154,8 +183,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.settings_outlined, size: 30,),
-                          SizedBox(width: 10,),
+                          Icon(
+                            Icons.settings_outlined,
+                            size: 30,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
                           Expanded(
                               child: Text(
                             'Sozlamalar',
@@ -167,14 +201,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             size: 15,
                             color: Colors.grey,
                           ),
-                          SizedBox(width: 5,)
+                          SizedBox(
+                            width: 5,
+                          )
                         ],
                       ),
                     ),
                   ),
-
-                  const Divider(height: 1,),
-
+                  const Divider(
+                    height: 1,
+                  ),
                   InkWell(
                     onTap: () {},
                     child: Container(
@@ -182,8 +218,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.info_outline, size: 30,),
-                          SizedBox(width: 10,),
+                          Icon(
+                            Icons.info_outline,
+                            size: 30,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
                           Expanded(
                               child: Text(
                             'Xizmat haqida',
@@ -195,12 +236,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             size: 15,
                             color: Colors.grey,
                           ),
-                          SizedBox(width: 5,)
+                          SizedBox(
+                            width: 5,
+                          )
                         ],
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),

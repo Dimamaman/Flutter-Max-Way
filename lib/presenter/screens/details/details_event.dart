@@ -6,9 +6,10 @@ abstract class DetailsEvent {}
 class LoadProducts extends DetailsEvent { }
 
 class AddProduct extends DetailsEvent {
-  ProductData product;
+  final ProductData product;
+  final BuildContext context;
 
-  AddProduct({required this.product});
+  AddProduct({required this.product, required this.context});
 
 }
 

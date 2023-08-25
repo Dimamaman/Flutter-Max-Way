@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_max_way/presenter/screens/product_search.dart';
-import 'package:flutter_max_way/presenter/screens/shimmer.dart';
+import 'package:flutter_max_way/presenter/screens/widgets/product_search.dart';
+import 'package:flutter_max_way/presenter/screens/widgets/shimmer.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../core/api/food_api.dart';
-import '../../core/model/model.dart';
-import '../bloc/food_bloc.dart';
-import '../pref/location_pref.dart';
-import 'category.dart';
-import 'map_page.dart';
+import '../../../core/api/food_api.dart';
+import '../../../core/model/model.dart';
+import '../../bloc/food_bloc.dart';
+import '../../pref/location_pref.dart';
+import '../widgets/category.dart';
+import '../map_screen/map_page.dart';
 
 class Home_Page extends StatefulWidget {
   var a = false;
@@ -33,6 +33,7 @@ class _Home_PageState extends State<Home_Page> {
 
   @override
   void initState() {
+    print("NNNNNNNNNNN Home initState");
     bloc.add(LoadFoodEvent());
     getLocation();
 
@@ -70,7 +71,7 @@ class _Home_PageState extends State<Home_Page> {
       bloc: bloc,
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: const Color(0xFFFFFFFF),
+          backgroundColor: const Color(0xFFF6F6F6),
           body: SafeArea(
             child: Column(
               children: [
@@ -157,7 +158,7 @@ class _Home_PageState extends State<Home_Page> {
                     height: 40,
                     width: double.infinity,
                     decoration: ShapeDecoration(
-                      color: const Color(0xFFEFEFEF),
+                      color: const Color(0xFFFFFFFF),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -252,7 +253,7 @@ class _Home_PageState extends State<Home_Page> {
                                     borderRadius: BorderRadius.circular(10),
                                     color: selectedCategories.contains(category)
                                         ? const Color(0xFF51267D)
-                                        : const Color(0xFFEFEFEF)),
+                                        : const Color(0xFFFFFFFF)),
                                 child: Center(
                                     child: Padding(
                                   padding: const EdgeInsets.all(8.0),

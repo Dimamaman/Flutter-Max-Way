@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/screens/details/details_page.dart';
 import 'package:flutter_max_way/presenter/utils/navigator.dart';
 
-import '../../core/model/model.dart';
+import '../../../core/model/model.dart';
 
 
 

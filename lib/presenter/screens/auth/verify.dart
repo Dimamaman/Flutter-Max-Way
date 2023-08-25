@@ -9,7 +9,9 @@ import 'package:pinput/pinput.dart';
 import '../../pref/location_pref.dart';
 
 class MyVerify extends StatefulWidget {
-  const MyVerify({Key? key}) : super(key: key);
+  String name;
+  String phone;
+  MyVerify({Key? key, required this.name, required this.phone}) : super(key: key);
 
   @override
   State<MyVerify> createState() => _MyVerifyState();
@@ -119,6 +121,8 @@ class _MyVerifyState extends State<MyVerify> {
                           // Sign the user in (or link) with the credential
                           await auth.signInWithCredential(credential);
                           pref.setIsLogged(true);
+                          pref.setName(widget.name);
+                          pref.setPhone(widget.phone);
                           Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => MainScreen()));
 
                         } catch (e) {

@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     next().then((value) =>
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => haveLang == true ? MainScreen() : const SelectLang()))
+            context, MaterialPageRoute(builder: (_) => haveLang == true ? const MainScreen() : const SelectLang()))
     );
     super.initState();
   }
@@ -32,6 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: const Color(0xFF51267D),
       body: Center(

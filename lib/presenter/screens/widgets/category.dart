@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/screens/details/details_page.dart';
-import 'package:flutter_max_way/presenter/screens/map_page.dart';
+import 'package:flutter_max_way/presenter/screens/map_screen/map_page.dart';
 
-import '../../core/model/model.dart';
+import '../../../core/model/model.dart';
 import 'product.dart';
 
 class CategoryItem extends StatelessWidget {
@@ -28,7 +28,7 @@ class CategoryItem extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: const Color(0xFFEFEFEF)
+              color: const Color(0xFFFFFFFF)
             ),
             height: category.products.length * 90 + 75,
             child: Column(

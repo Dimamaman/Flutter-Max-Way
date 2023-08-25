@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/hive/hive.dart';
 import '../../../core/model/model.dart';
@@ -15,13 +15,13 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
   final HiveHelper _hiveHelper;
   final _stateController = StreamController<DetailsState>();
 
-  DetailsBloc(this._hiveHelper) : super(DetailsState()) {
+  DetailsBloc(this._hiveHelper) : super(const DetailsState()) {
     on<DetailsEvent>((event, emit) async {
       switch (event) {
         case LoadProducts():
           await _onLoadProducts(event, emit);
         case AddProduct():
-          _onAddProduct(event, emit, event.product);
+          _onAddProduct(event, emit, event.product, event.context);
         case DeleteProduct():
           await _onLoadProducts(event, emit);
       }
@@ -51,13 +51,18 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
     }
   }
 
-  Future<void> _onAddProduct(DetailsEvent event, Emitter<DetailsState> emit, ProductData product) async {
+  Future<void> _onAddProduct(DetailsEvent event, Emitter<DetailsState> emit, ProductData product, BuildContext context) async {
     if (state.state == UIState.loading) return;
     emit(state.copyWith(state: UIState.loading));
 
     try{
+      print("HHHHHHH qosildima?");
       await _hiveHelper.addProduct(product);
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Product added to Cart')));
+      print("HHHHHHH qosildima awwwwwaaa");
     }catch(e) {
+      print("HHHHHHH qosildima YAQ");
       emit(state.copyWith(state: UIState.error, errorMessage: "$e"));
     }
   }

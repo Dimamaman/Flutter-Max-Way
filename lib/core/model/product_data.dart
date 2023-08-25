@@ -1,6 +1,11 @@
 
 import 'package:hive/hive.dart';
 
+import 'description_model.dart';
+
+part 'product_data.g.dart';
+
+@HiveType(typeId: 0)
 class ProductData {
   @HiveField(0)
   String id;
@@ -50,16 +55,3 @@ class ProductData {
   }
 }
 
-class DescriptionData {
-  String uz;
-
-  DescriptionData({
-    required this.uz,
-  });
-
-  factory DescriptionData.fromJson(Map<String,dynamic> json) {
-    return DescriptionData(
-      uz: json['uz'] ?? '',
-    );
-  }
-}

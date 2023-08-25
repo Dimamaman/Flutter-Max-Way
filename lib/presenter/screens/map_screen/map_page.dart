@@ -2,15 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/pref/location_pref.dart';
-import 'package:flutter_max_way/presenter/screens/home_page.dart';
+import 'package:flutter_max_way/presenter/screens/home/home_page.dart';
 import 'package:flutter_max_way/presenter/screens/main_screen.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
-import '../../core/model/LocationModel.dart';
-import '../utils/map_utils.dart';
-import 'delivery_address.dart';
+import '../../../core/model/LocationModel.dart';
+import '../../utils/map_utils.dart';
 
 class Map_Page extends StatefulWidget {
   const Map_Page({super.key});
@@ -187,7 +186,7 @@ class _Map_PageState extends State<Map_Page> {
                         Navigator.pop(context);
                         Navigator.pushReplacement(context,
                             MaterialPageRoute(builder: (context) {
-                              return Home_Page(a: true);
+                              return MainScreen();
                             }));
                       },
                       child: Container(
