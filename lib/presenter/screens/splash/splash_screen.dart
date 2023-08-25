@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/screens/main_screen.dart';
+import 'package:flutter_max_way/presenter/screens/select_lang/select_lang.dart';
+
+import '../../pref/location_pref.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -9,16 +12,21 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  final pref = LocationPref();
+  bool haveLang = false;
+
   @override
   void initState() {
     next().then((value) =>
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => MainScreen()))
+            context, MaterialPageRoute(builder: (_) => haveLang == true ? MainScreen() : const SelectLang()))
     );
     super.initState();
   }
 
   Future<void> next() async {
+    haveLang = await pref.getLang();
     await Future.delayed(const Duration(milliseconds: 2000));
   }
 

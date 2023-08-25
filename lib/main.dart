@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/screens/auth/phone.dart';
 import 'package:flutter_max_way/presenter/screens/auth/verify.dart';
 import 'package:flutter_max_way/presenter/screens/main_screen.dart';
-import 'package:flutter_max_way/presenter/screens/splash_screen.dart';
+import 'package:flutter_max_way/presenter/screens/select_lang/select_lang.dart';
+import 'package:flutter_max_way/presenter/screens/splash/splash_screen.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
@@ -33,15 +34,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: 'phone',
+      // initialRoute: 'phone',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      routes: {
-        'phone': (context) => MyPhone(),
-        'verify': (context) => MyVerify()
-      },
+      // routes: {
+      //   'phone': (context) => MyPhone(),
+      //   'verify': (context) => MyVerify()
+      // },
+      home: const SplashScreen(),
     );
   }
 }

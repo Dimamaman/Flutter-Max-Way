@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/screens/auth/verify.dart';
 
-import '../splash_screen.dart';
+import '../splash/splash_screen.dart';
 
 class MyPhone extends StatefulWidget {
   const MyPhone({Key? key}) : super(key: key);

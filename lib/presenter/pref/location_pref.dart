@@ -4,9 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LocationPref {
   SharedPreferences? _prefs;
 
-  Future<void> setPosition(
-      String path,
-      ) async {
+  Future<void> setPosition(String path,) async {
     print("SAQLASH: ${path}");
     _prefs ??= await SharedPreferences.getInstance();
     await _prefs?.setString("position",path);
@@ -15,6 +13,16 @@ class LocationPref {
   Future<String> getPosition() async {
     _prefs ??= await SharedPreferences.getInstance();
     return _prefs?.getString("position") ?? "";
+  }
+
+  Future<void> setLang(bool lang) async {
+    _prefs ??= await SharedPreferences.getInstance();
+    await _prefs?.setBool("lang",lang);
+  }
+
+  Future<bool> getLang() async {
+    _prefs ??= await SharedPreferences.getInstance();
+    return _prefs?.getBool("lang") ?? false;
   }
 
   Future<void> setIsFirst(bool mode) async {

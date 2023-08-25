@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/screens/auth/phone.dart';
-import 'package:flutter_max_way/presenter/screens/splash_screen.dart';
+import 'package:flutter_max_way/presenter/screens/splash/splash_screen.dart';
 import 'package:pinput/pinput.dart';
 
 class MyVerify extends StatefulWidget {
