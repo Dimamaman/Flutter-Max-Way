@@ -5,7 +5,6 @@ class LocationPref {
   SharedPreferences? _prefs;
 
   Future<void> setPosition(String path,) async {
-    print("SAQLASH: ${path}");
     _prefs ??= await SharedPreferences.getInstance();
     await _prefs?.setString("position",path);
   }
@@ -13,6 +12,26 @@ class LocationPref {
   Future<String> getPosition() async {
     _prefs ??= await SharedPreferences.getInstance();
     return _prefs?.getString("position") ?? "";
+  }
+
+  Future<void> setName(String name) async {
+    _prefs ??= await SharedPreferences.getInstance();
+    await _prefs?.setString("name", name);
+  }
+
+  Future<String> getName() async {
+    _prefs ??= await SharedPreferences.getInstance();
+    return _prefs?.getString("name") ?? "";
+  }
+
+  Future<void> setPhone(String phone) async {
+    _prefs ??= await SharedPreferences.getInstance();
+    await _prefs?.setString("phone", phone);
+  }
+
+  Future<String> getPhone() async {
+    _prefs ??= await SharedPreferences.getInstance();
+    return _prefs?.getString("phone") ?? "";
   }
 
   Future<void> setLang(bool lang) async {
@@ -34,4 +53,16 @@ class LocationPref {
     _prefs ??= await SharedPreferences.getInstance();
     return _prefs?.getBool('first') ?? true;
   }
+
+  Future<void> setIsLogged(bool logged) async {
+    _prefs ??= await SharedPreferences.getInstance();
+    await _prefs?.setBool('logged', logged);
+  }
+
+  Future<bool> getIsLogged() async {
+    _prefs ??= await SharedPreferences.getInstance();
+    return _prefs?.getBool('logged') ?? false;
+  }
+
+
 }

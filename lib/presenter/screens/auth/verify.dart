@@ -2,8 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/screens/auth/phone.dart';
+import 'package:flutter_max_way/presenter/screens/main_screen.dart';
 import 'package:flutter_max_way/presenter/screens/splash/splash_screen.dart';
 import 'package:pinput/pinput.dart';
+
+import '../../pref/location_pref.dart';
 
 class MyVerify extends StatefulWidget {
   const MyVerify({Key? key}) : super(key: key);
@@ -14,6 +17,7 @@ class MyVerify extends StatefulWidget {
 
 class _MyVerifyState extends State<MyVerify> {
   final FirebaseAuth auth = FirebaseAuth.instance;
+  final pref = LocationPref();
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +118,8 @@ class _MyVerifyState extends State<MyVerify> {
 
                           // Sign the user in (or link) with the credential
                           await auth.signInWithCredential(credential);
-                          Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => SplashScreen()));
+                          pref.setIsLogged(true);
+                          Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => MainScreen()));
 
                         } catch (e) {
                           print("Qatelik: $e");

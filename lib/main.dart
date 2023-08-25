@@ -17,10 +17,11 @@ final navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   AndroidYandexMap.useAndroidViewSurface = false;
   WidgetsFlutterBinding.ensureInitialized();
-  // final appDocumentDirectory = await getApplicationDocumentsDirectory();
-  // Hive.init(appDocumentDirectory.path);
-  // await setUpDatabase();
-  WidgetsFlutterBinding.ensureInitialized();
+  final appDocumentDirectory = await getApplicationDocumentsDirectory();
+  Hive.init(appDocumentDirectory.path);
+
+  await setUpDatabase();
+
   await Firebase.initializeApp();
 
   runApp(MyApp());

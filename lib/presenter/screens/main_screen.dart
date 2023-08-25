@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_max_way/presenter/screens/auth/phone.dart';
 import 'package:flutter_max_way/presenter/screens/home_page.dart';
+import 'package:flutter_max_way/presenter/screens/profile/profile_screen.dart';
+
+import '../pref/location_pref.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -62,15 +66,6 @@ class ExploreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(child: Text('Explore Screen'));
-  }
-}
-
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('Profile Screen'));
   }
 }
 

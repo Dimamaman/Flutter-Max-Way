@@ -54,11 +54,11 @@ class _DetailPageState extends State<DetailPage> {
     setState(() {});
   }
 
-  // late DetailsBloc bloc;
+  late DetailsBloc bloc;
 
   @override
   void initState() {
-    // bloc = getIt.get<DetailsBloc>();
+    bloc = getIt.get<DetailsBloc>();
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     super.initState();
