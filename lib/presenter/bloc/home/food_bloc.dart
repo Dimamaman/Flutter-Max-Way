@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../core/api/food_api.dart';
-import '../../core/model/model.dart';
+import '../../../core/api/food_api.dart';
+import '../../../core/model/model.dart';
 
 part 'food_event.dart';
 

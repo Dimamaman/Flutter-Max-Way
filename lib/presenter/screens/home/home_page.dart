@@ -7,7 +7,7 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../core/api/food_api.dart';
 import '../../../core/model/model.dart';
-import '../../bloc/food_bloc.dart';
+import '../../bloc/home/food_bloc.dart';
 import '../../pref/location_pref.dart';
 import '../widgets/category.dart';
 import '../map_screen/map_page.dart';

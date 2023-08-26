@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_max_way/core/hive/dao/dao.dart';
 import 'package:flutter_max_way/core/model/description_model.dart';
-import 'package:flutter_max_way/core/model/product_data.dart';
+import 'package:flutter_max_way/core/floor/entity/product_data.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../../../core/di/hive_module.dart';
-import '../../../core/hive/database/database.dart';
+import '../../../core/floor/dao/dao.dart';
+import '../../../core/floor/database/database.dart';
+import '../../../di/floor_module.dart';
 import '../../utils/navigator.dart';
 
 class CartScreen extends StatefulWidget {

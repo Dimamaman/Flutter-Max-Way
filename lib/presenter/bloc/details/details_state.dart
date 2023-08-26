@@ -2,25 +2,25 @@ part of 'details_bloc.dart';
 
 @immutable
 class DetailsState {
-  final List<ProductData> products;
   final UIState state;
   final String errorMessage;
+  final int productCount;
 
-  const DetailsState({
-      this.products = const [],
-      this.state = UIState.init,
-      this.errorMessage = ''
-  });
+  const DetailsState(
+      {this.state = UIState.init,
+      this.errorMessage = '',
+      this.productCount = 1});
 
   DetailsState copyWith({
-    List<ProductData>? products,
     UIState? state,
     String? errorMessage,
+    int? productCount,
   }) {
     return DetailsState(
-        products: products ?? this.products,
         state: state ?? this.state,
-        errorMessage: errorMessage ?? this.errorMessage);
+        errorMessage: errorMessage ?? this.errorMessage,
+        productCount: productCount ?? this.productCount
+    );
   }
 }
 

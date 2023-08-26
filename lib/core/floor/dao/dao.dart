@@ -1,5 +1,5 @@
 import 'package:floor/floor.dart';
-import 'package:flutter_max_way/core/model/product_data.dart';
+import 'package:flutter_max_way/core/floor/entity/product_data.dart';
 
 
 @dao
