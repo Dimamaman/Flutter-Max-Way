@@ -34,12 +34,12 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
     emit(state.copyWith(state: UIState.loading));
 
     var result = <ProductData>[];
-    var temp = await _hiveHelper.getAllProducts();
-    print("KKKKKKKKKKK $temp");
-
-    for (ProductData product in temp) {
-      result.add(product);
-    }
+    // var temp = await _hiveHelper.getAllProducts();
+    // print("KKKKKKKKKKK $temp");
+    //
+    // for (ProductData product in temp) {
+    //   result.add(product);
+    // }
 
     try {
       emit(state.copyWith(
@@ -57,7 +57,7 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
 
     try{
       print("HHHHHHH qosildima?");
-      await _hiveHelper.addProduct(product);
+      // await _hiveHelper.addProduct(product);
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Product added to Cart')));
       print("HHHHHHH qosildima awwwwwaaa");

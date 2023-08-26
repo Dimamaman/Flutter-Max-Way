@@ -1,30 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_max_way/core/hive/dao/dao.dart';
 import 'package:flutter_max_way/core/model/description_model.dart';
 import 'package:flutter_max_way/core/model/product_data.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../../../core/di/hive_module.dart';
+import '../../../core/hive/database/database.dart';
 import '../../utils/navigator.dart';
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({super.key});
+
+  final ProductDao _productDao = getIt<AppDatabase>().productDao;
+  List<ProductData> todoList = [];
+
+  final database = $FloorAppDatabase.databaseBuilder('flutter_database.db').build();
+
+  CartScreen({super.key});
 
   @override
   State<CartScreen> createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
-  late final Box<ProductData> box;
 
   @override
   void initState() {
-    print("NNNNNNNNNNN Cart initState");
-    box = Hive.box<ProductData>(dbName);
     super.initState();
   }
 
   @override
   void dispose() {
-    box.close();
     super.dispose();
   }
 
@@ -32,71 +37,90 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Todo List'),
+        title: const Text('Cart'),
+        centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: ValueListenableBuilder(
-          valueListenable: box.listenable(),
-          builder: (context, items, child) {
-            List<int> keys = items.keys.cast<int>().toList();
+        body: FutureBuilder(
+          future: _callProducts(),
+          builder: (BuildContext context, AsyncSnapshot<ProductDao> snapshot) {
+            if (!snapshot.hasData || snapshot.connectionState == ConnectionState.none) {
+              return const Center(child:  CircularProgressIndicator());
+            } else {
+              return StreamBuilder(
+                stream: snapshot.data!.streamedData(),
+                builder: (BuildContext context, AsyncSnapshot<List<ProductData>> snapshot) {
+                  if (!snapshot.hasData || snapshot.connectionState == ConnectionState.none) {
+                    return const Center(child:  CircularProgressIndicator());
+                  } else {
+                    if (widget.todoList.length != snapshot.data!.length) {
+                      widget.todoList = snapshot.data!;
+                    }
+                    if (snapshot.data!.isEmpty) {
+                      return const Center(child: Text('No Data Found'));
+                    }
 
-            return keys.isEmpty
-                ? const Center(
-                    child: Text(
-                      'No Data',
-                      style: TextStyle(fontSize: 30),
-                    ),
-                  )
-                : ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount: keys.length,
-                    itemBuilder: (_, index) {
-                      final int key = keys[index];
-                      final ProductData productData = items.get(key) ??
-                          ProductData(
-                            title: DescriptionData(uz: ''),
-                            description: DescriptionData(uz: ''),
-                            id: '',
-                            price: 23,
-                            image: "",
-                            currency: '',
-                          );
-                      return Card(
-                        shape: RoundedRectangleBorder(
-                            side: const BorderSide(
-                                color: Colors.black54, width: 1.0),
-                            borderRadius: BorderRadius.circular(8)),
-                        color: Colors.white,
-                        margin: const EdgeInsets.all(10),
-                        elevation: 2,
-                        child: ListTile(
-                          title: Text(productData.title.uz),
-                          subtitle: Text(productData.description.uz),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              // Edit button
-                              IconButton(
-                                  icon: const Icon(Icons.edit),
-                                  onPressed: () => {}),
-                              // Delete button
-                              IconButton(
-                                  icon: const Icon(Icons.delete),
-                                  onPressed: () => {}),
-                            ],
+                    return ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: ListTile(
+                                title: Text(snapshot.data![index].title),
+                                subtitle: Text(
+                                  snapshot.data![index].description,
+                                  style: const TextStyle(fontSize: 10),
+                                ),
+                                trailing: SizedBox(
+                                  width: 100,
+                                  child: Row(
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+
+                                        },
+                                        icon: const Icon(
+                                          Icons.edit,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          _deleteTask(snapshot.data![index].productId);
+                                        },
+                                        icon: const Icon(
+                                          Icons.delete,
+                                          color: Colors.redAccent,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      );
-                    });
+                        );
+                      },
+                    );
+                  }
+                },
+              );
+            }
           },
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.add),
-      ),
     );
+  }
+
+  void _deleteTask(String id) {
+    widget._productDao.deleteTodo(id);
+    setState(() {});
+  }
+
+  Future<ProductDao> _callProducts() async {
+    return widget._productDao;
   }
 }

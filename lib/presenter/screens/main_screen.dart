@@ -45,9 +45,9 @@ class _MainScreenState extends State<MainScreen> {
       body: IndexedStack(
         index: _currentIndex,
         children: [Home_Page(a: false),
-          const CartScreen(),
+          CartScreen(),
           const OrdersScreen(),
-          isLogged ? ProfileScreen() : MyPhone()
+          isLogged ? const ProfileScreen() : const MyPhone()
         ],
       ),
       //body: _screens[_currentIndex],
@@ -55,7 +55,6 @@ class _MainScreenState extends State<MainScreen> {
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
         onTap: (index) {
-          print("NNNNNNNNNNNN $index");
           setState(() {
             _currentIndex = index;
           });

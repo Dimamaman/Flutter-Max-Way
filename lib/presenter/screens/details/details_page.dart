@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_max_way/core/hive/dao/dao.dart';
 import 'package:flutter_max_way/core/hive/hive.dart';
 import 'package:flutter_max_way/core/model/model.dart';
 import 'package:flutter_max_way/core/model/product_data.dart';
@@ -7,6 +8,8 @@ import 'package:flutter_max_way/presenter/screens/cart/cart_screen.dart';
 import 'package:flutter_max_way/presenter/screens/details/details_bloc.dart';
 import 'package:hive/hive.dart';
 
+import '../../../core/di/hive_module.dart';
+import '../../../core/hive/database/database.dart';
 import '../../../core/model/description_model.dart';
 import '../../utils/navigator.dart';
 
@@ -58,12 +61,12 @@ class _DetailPageState extends State<DetailPage> {
     setState(() {});
   }
 
-  late DetailsBloc bloc;
-
+  var dao = getIt<AppDatabase>().productDao;
 
   @override
   void initState() {
-    bloc = DetailsBloc(HiveHelper(Hive.box<ProductData>(dbName)));
+    // bloc = DetailsBloc(HiveHelper(Hive.box<ProductData>(dbName)));
+
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
     super.initState();
@@ -74,6 +77,13 @@ class _DetailPageState extends State<DetailPage> {
     _scrollController.removeListener(_scrollListener);
     super.dispose();
   }
+
+  /*Future<void> load() async {
+    final database = await $FloorAppDatabase.databaseBuilder('flutter_database.db').build();
+
+    dao = database.productDao;
+    setState(() {});
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -202,24 +212,33 @@ class _DetailPageState extends State<DetailPage> {
                       InkWell(
                         onTap: () {
                           if (buttonText == "To Cart") {
-                            Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => CartScreen()));
+                            Navigator.pushReplacement(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (_) => CartScreen()));
                           }
 
                           if (buttonText == "Add") {
-                            bloc.add(AddProduct(
-                                product: ProductData(
-                                    id: widget.product.id,
-                                    price: widget.product.price,
-                                    currency: widget.product.currency,
-                                    image: widget.product.image,
-                                    title: DescriptionData(
-                                        uz: widget.product.title.uz),
-                                    description: DescriptionData(
-                                        uz: widget.product.description.uz)
-                                ),
-                                context: context
-                            )
-                            );
+                            // bloc.add(AddProduct(
+                            //     product: ProductData(
+                            //         id: widget.product.id,
+                            //         price: widget.product.price,
+                            //         currency: widget.product.currency,
+                            //         image: widget.product.image,
+                            //         title: widget.product.title.uz,
+                            //         description: widget.product.description.uz
+                            //     ),
+                            //     context: context
+                            // )
+                            // );
+                            dao.insertProduct(ProductData(
+                              productId: widget.product.id,
+                              price: widget.product.price,
+                              currency: widget.product.currency,
+                              image: widget.product.image,
+                              title: widget.product.title.uz,
+                              description: widget.product.description.uz
+                            ));
                             buttonText = "To Cart";
                             setState(() {});
                           }
@@ -233,8 +252,8 @@ class _DetailPageState extends State<DetailPage> {
                             child: Center(
                                 child: Text(
                               buttonText,
-                              style:
-                                  const TextStyle(color: Colors.white, fontSize: 18),
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 18),
                             ))),
                       ),
                     ],

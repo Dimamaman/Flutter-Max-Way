@@ -21,16 +21,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> next() async {
     isLogged = await pref.getIsLogged();
     name = await pref.getName();
-    print("VVVVVVVVVV $name");
     phone = await pref.getPhone();
-    print("VVVVVVVVVV $phone");
-
-    // await Future.delayed(const Duration(milliseconds: 2000));
+    setState(() {});
   }
 
   @override
   void initState() {
-    print("NNNNNNNNNNN Profile initState");
     next();
     // next().then((value) =>
     //     Navigator.pushReplacement(
@@ -74,7 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "$name",
+                        name,
                         style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
                       ),
@@ -82,7 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         height: MediaQuery.of(context).size.height * 0.01,
                       ),
                       Text(
-                        "${phone}",
+                        phone,
                         style: TextStyle(fontSize: 17, color: Colors.grey[700]),
                       ),
                     ],

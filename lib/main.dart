@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 import 'core/di/hive_module.dart';
+import 'core/hive/database/database.dart';
 import 'core/model/description_model.dart';
 import 'core/model/product_data.dart';
 
@@ -15,15 +16,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
   AndroidYandexMap.useAndroidViewSurface = false;
   WidgetsFlutterBinding.ensureInitialized();
-  // final appDocumentDirectory = await getApplicationDocumentsDirectory();
-  // Hive.init(appDocumentDirectory.path);
-  // await setUpDatabase();
-
-  await Hive.initFlutter();
-  Hive.registerAdapter(ProductDataAdapter());
-  Hive.registerAdapter(DescriptionDataAdapter());
-
-  await Hive.openBox<ProductData>(dbName);
+  await setUpDatabase();
 
   await Firebase.initializeApp();
 

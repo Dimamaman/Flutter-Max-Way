@@ -6,17 +6,13 @@ import 'package:flutter_max_way/presenter/utils/navigator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 
+import '../hive/database/database.dart';
+
 GetIt getIt = GetIt.instance;
 
 Future<void> setUpDatabase() async {
-  Box box;
+  final database = await $FloorAppDatabase.databaseBuilder('flutter_database.db').build();
 
-  if(await Hive.boxExists(dbName)) {
-    box = await Hive.openBox(dbName);
-  } else {
-    box = Hive.box(dbName);
-  }
+  getIt.registerLazySingleton<AppDatabase>(() => database);
 
-  getIt.registerLazySingleton(() => HiveHelper(box));
-  getIt.registerLazySingleton(() => DetailsBloc(getIt.get()));
 }

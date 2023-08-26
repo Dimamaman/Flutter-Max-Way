@@ -9,7 +9,7 @@ class HiveHelper {
 
   HiveHelper(this._box);
 
-  Future<void> addProduct(ProductData product) async {
+  /*Future<void> addProduct(ProductData product) async {
     await _box.add(product);
   }
 
@@ -29,6 +29,6 @@ class HiveHelper {
 
   Future<List<ProductData>> getAllProducts() async {
     return (_box.values).map((e) => ProductData.fromJson(e as Map<String, dynamic>)).toList();
-  }
+  }*/
 
 }
