@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/screens/auth/phone.dart';
+import 'package:flutter_max_way/presenter/screens/branches/branches.dart';
 import 'package:flutter_max_way/presenter/screens/home/home_page.dart';
 
 import '../../pref/location_pref.dart';
@@ -138,8 +139,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     height: 1,
                   ),
                   InkWell(
-                    onTap: () {},
-                    child: Container(
+                    onTap: () {
+                      Navigator.push(context, CupertinoPageRoute(builder: (_) => const BranchesScreen()));
+                    },
+                    child: SizedBox(
                       height: MediaQuery.of(context).size.height * 0.1,
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
