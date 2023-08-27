@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/screens/auth/phone.dart';
+import 'package:flutter_max_way/presenter/screens/cart/cart_page_samandar.dart';
 import 'package:flutter_max_way/presenter/screens/cart/cart_screen.dart';
 import 'package:flutter_max_way/presenter/screens/home/home_page.dart';
 import 'package:flutter_max_way/presenter/screens/profile/profile_screen.dart';
@@ -7,7 +8,8 @@ import 'package:flutter_max_way/presenter/screens/profile/profile_screen.dart';
 import '../pref/location_pref.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  final int position;
+  const MainScreen({super.key,this.position = 0});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -19,16 +21,10 @@ class _MainScreenState extends State<MainScreen> {
 
   int _currentIndex = 0; // Index of the currently selected tab
 
-  // final _screens = [
-  //   Home_Page(a: false),
-  //   const CartScreen(),
-  //   const OrdersScreen(),
-  //   isLogged ? ProfileScreen() : MyPhone()
-  // ];
-
   @override
   void initState() {
     next();
+    _currentIndex = widget.position;
     super.initState();
   }
 
@@ -39,15 +35,14 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("SSSSSSSSSS $isLogged");
     return Scaffold(
       backgroundColor: const Color(0xFFF6F6F6),
       body: IndexedStack(
         index: _currentIndex,
         children: [Home_Page(a: false),
-          CartScreen(),
+          CartPage(),
           const OrdersScreen(),
-          isLogged ? const ProfileScreen() : const MyPhone()
+          const ProfileScreen()
         ],
       ),
       //body: _screens[_currentIndex],
@@ -65,7 +60,10 @@ class _MainScreenState extends State<MainScreen> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
+            icon: Badge(
+              label: Text('20'),
+              child: Icon(Icons.shopping_cart),
+            ),
             label: 'Cart',
           ),
           BottomNavigationBarItem(

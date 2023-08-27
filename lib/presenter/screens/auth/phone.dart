@@ -195,7 +195,7 @@ class _MyPhoneState extends State<MyPhone> {
       ),
       onWillPop: () async {
         Navigator.pushReplacement(
-            context, CupertinoPageRoute(builder: (_) => MainScreen()));
+            context, MaterialPageRoute(builder: (_) => MainScreen()));
         print("WWWWWWWWWWW onWillPop");
         return true;
       },

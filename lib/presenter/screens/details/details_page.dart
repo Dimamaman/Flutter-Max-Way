@@ -185,7 +185,7 @@ class _DetailPageState extends State<DetailPage> {
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  MainAxisAlignment.spaceEvenly,
                                   children: [
                                     IconButton(
                                         onPressed: () {
@@ -229,13 +229,13 @@ class _DetailPageState extends State<DetailPage> {
                                 bloc.add(AddProduct(
                                     product: ProductData(
                                         productId: widget.product.id,
-                                        price:
-                                            widget.product.price * productCount,
+                                        price: widget.product.price * productCount,
                                         currency: widget.product.currency,
                                         image: widget.product.image,
                                         title: widget.product.title.uz,
-                                        description:
-                                            widget.product.description.uz),
+                                        description: widget.product.description.uz,
+                                        amount: productCount
+                                    ),
                                     context: context));
                                 buttonText = "To Cart";
                                 setState(() {});
@@ -249,10 +249,10 @@ class _DetailPageState extends State<DetailPage> {
                                     color: const Color(0xFF51267D)),
                                 child: Center(
                                     child: Text(
-                                  buttonText,
-                                  style: const TextStyle(
-                                      color: Colors.white, fontSize: 18),
-                                ))),
+                                      buttonText,
+                                      style: const TextStyle(
+                                          color: Colors.white, fontSize: 18),
+                                    ))),
                           ),
                         ],
                       ),

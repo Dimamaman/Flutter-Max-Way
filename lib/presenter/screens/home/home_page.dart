@@ -198,8 +198,7 @@ class _Home_PageState extends State<Home_Page> {
                 SizedBox(
                   height: 40,
                   child: Builder(builder: (context) {
-                    if (state.status == EnumStatus.loading &&
-                        state.list.isEmpty) {
+                    if (state.status == EnumStatus.loading && state.list.isEmpty) {
                       return ListView.separated(
                           itemCount: 10,
                           separatorBuilder: (context, index) =>

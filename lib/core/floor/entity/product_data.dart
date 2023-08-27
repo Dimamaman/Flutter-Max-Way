@@ -9,6 +9,7 @@ class ProductData {
   String image;
   String title;
   String description;
+  int amount;
 
 
   ProductData({
@@ -17,7 +18,8 @@ class ProductData {
     required this.currency,
     required this.image,
     required this.title,
-    required this.description
+    required this.description,
+    required this.amount
   });
 }
 
