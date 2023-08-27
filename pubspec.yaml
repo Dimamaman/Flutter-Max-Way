@@ -35,6 +35,7 @@ dependencies:
   cached_network_image: ^3.2.3
   url_launcher: ^6.1.12
   fluttertoast: ^8.2.2
+  maps_launcher: ^2.2.0
 
 
 dev_dependencies:

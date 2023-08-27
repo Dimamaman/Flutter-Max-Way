@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/floor/database/database.dart';
 import '../../../core/floor/entity/product_data.dart';
 import '../../../core/model/model.dart';
 import '../../../di/floor_module.dart';
 import '../../bloc/details/details_bloc.dart';
+import '../../utils/badges.dart';
+import '../../utils/navigator.dart';
 import '../../utils/toast.dart';
 import '../cart/cart_page_samandar.dart';
 import '../cart/cart_screen.dart';
@@ -733,6 +736,9 @@ class _DetailPageSamandarState extends State<DetailPageSamandar> {
                                           amount: state.productCount),
                                       context: context));
                                   bloc.add(LoadProduct(product: widget.product, alreadyHave: true));
+                                  // var a = context.watch<BadgeProvider>().badgeValue;
+                                  // var a = Provider.of<BadgeProvider>(context, listen: false).badgeValue;
+                                  context.read<BadgeProvider>().increment();
                                 }
                               },
                               child: Container(

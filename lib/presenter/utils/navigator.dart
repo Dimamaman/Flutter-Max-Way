@@ -29,3 +29,7 @@ Future<void> setUpDatabase() async {
   getIt.registerLazySingleton(() => MainBloc(getIt.get()));
 
 }*/
+
+class MyBadges{
+  static int badges = 0;
+}

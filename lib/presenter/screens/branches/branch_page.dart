@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/model/branch_model.dart';
@@ -104,7 +105,7 @@ class _BranchPageState extends State<BranchPage> {
               const Divider(height: 1, indent: 15, endIndent: 15,),
               InkWell(
                 onTap: () {
-                  
+                  MapsLauncher.launchCoordinates(widget.branch.location.lat, widget.branch.location.long);
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 15),

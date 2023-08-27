@@ -1,13 +1,17 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_max_way/presenter/screens/main_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/floor/dao/dao.dart';
 import '../../../core/floor/database/database.dart';
 import '../../../core/floor/entity/product_data.dart';
 import '../../../di/floor_module.dart';
+import '../../utils/badges.dart';
+import '../../utils/navigator.dart';
 
 class CartPage extends StatefulWidget {
   CartPage({super.key});
@@ -40,7 +44,6 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
-
     Future.delayed(const Duration(milliseconds: 50)).then((value) {
       setState(() {});
     });
@@ -121,6 +124,9 @@ class _CartPageState extends State<CartPage> {
                                   child: IconButton(
                                     onPressed: () {
                                       _delete(snapshot.data![index].productId);
+                                      // var a = Provider.of<BadgeProvider>(context, listen: false).badgeValue;
+                                      // context.read<BadgeProvider>().updateBadgeValue(a--);
+                                      context.read<BadgeProvider>().decrement();
                                     },
                                     icon: const Icon(
                                       Icons.close_rounded,
