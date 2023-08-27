@@ -1,7 +1,7 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -9,51 +9,33 @@ import '../../../core/floor/database/database.dart';
 import '../../../core/floor/entity/product_data.dart';
 import '../../../core/model/model.dart';
 import '../../../di/floor_module.dart';
+import '../../bloc/details/details_bloc.dart';
 import '../../utils/toast.dart';
+import '../cart/cart_page_samandar.dart';
+import '../cart/cart_screen.dart';
 import '../main_screen.dart';
 
-class DetailPage extends StatefulWidget {
+class DetailPageSamandar extends StatefulWidget {
   final Product product;
 
-  const DetailPage({super.key, required this.product});
+  const DetailPageSamandar({super.key, required this.product});
 
   @override
-  State<DetailPage> createState() => _DetailPageState();
+  State<DetailPageSamandar> createState() => _DetailPageSamandarState();
 }
 
-class _DetailPageState extends State<DetailPage> {
-  var productCount = 1;
-  bool isAdded = false;
-  List<ProductData> list = [];
+class _DetailPageSamandarState extends State<DetailPageSamandar> {
+
 
   final dao = getIt<AppDatabase>().productDao;
-
-  Future<void> load() async {
-    list = await dao.getAllProducts();
-  }
+  late DetailsBloc bloc;
+  var productCount = 1;
 
   @override
   void initState() {
-    load().then((value){
-      for(var product in list){
-        if(product.title == widget.product.title.uz){
-          productCount = product.amount;
-          isAdded = true;
-        }
-      }
-      setState(() {});
-    });
+    bloc = DetailsBloc(dao);
+    bloc.add(LoadProduct(product: widget.product, alreadyHave: false,));
     super.initState();
-  }
-
-  void inc() {
-    productCount++;
-    setState(() {});
-  }
-
-  void dec() {
-    productCount--;
-    setState(() {});
   }
 
   Future<void> shareApp() async {
@@ -62,339 +44,718 @@ class _DetailPageState extends State<DetailPage> {
     const String message = 'Check out my new app: $appLink';
 
     // Share the app link and message using the share dialog
-    await FlutterShare.share(title: 'Share App', text: message, linkUrl:
-    appLink);
+    await FlutterShare.share(title: 'Share App', text: message, linkUrl: appLink);
   }
 
   @override
   Widget build(BuildContext context) {
-
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Stack(children: [
-        Column(
-          children: [
-            Expanded(
-              child: CustomScrollView(
-                slivers: [
-                  SliverAppBar(
-                    pinned: true,
-                    backgroundColor: Colors.white,
-                    automaticallyImplyLeading: false,
-                    scrolledUnderElevation: 0,
-                    expandedHeight: 260,
-                    leading: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: Colors.white,
+    return BlocBuilder<DetailsBloc, DetailsState>(
+      bloc: bloc,
+      builder: (context, state) {
+        productCount = state.productCount;
+        if (state.isAdded) {
+          print("LLLLLLLLL  isAdded true");
+          print("LLLLLLLLL  amount ${state.productData.amount}");
+          print("LLLLLLLLL  count ${state.productCount}");
+          print("ZZZZZZZZZ  button message ${state.buttonMessage}");
+          return Scaffold(
+            backgroundColor: Colors.white,
+            body: Stack(children: [
+              Column(
+                children: [
+                  Expanded(
+                    child: CustomScrollView(
+                      slivers: [
+                        SliverAppBar(
+                          pinned: true,
+                          backgroundColor: Colors.white,
+                          automaticallyImplyLeading: false,
+                          scrolledUnderElevation: 0,
+                          expandedHeight: 260,
+                          leading: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: Colors.white,
+                                ),
+                                child: BackButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                )),
                           ),
-                          child: BackButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          )),
-                    ),
-                    actions: [
-                      Material(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(20),
-                          onTap: () async {
-                            await shareApp();
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.all(8),
-                            child: Icon(Icons.share),
+                          actions: [
+                            Material(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(30),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(20),
+                                onTap: () async {
+                                  await shareApp();
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Icon(Icons.share),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            )
+                          ],
+                          flexibleSpace: FlexibleSpaceBar(
+                            background: CachedNetworkImage(
+                              imageUrl: widget.product.image,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(width: 10,)
-                    ],
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: CachedNetworkImage(
-                        imageUrl: widget.product.image, fit: BoxFit.cover,),
+                        SliverToBoxAdapter(
+                          child: Column(
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                margin: const EdgeInsets.symmetric(vertical: 6),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.product.title.uz,
+                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      widget.product.description.uz.trim(),
+                                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: double.infinity,
+                                margin: const EdgeInsets.symmetric(vertical: 6),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.product.title.uz,
+                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      widget.product.description.uz.trim(),
+                                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: double.infinity,
+                                margin: const EdgeInsets.symmetric(vertical: 6),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.product.title.uz,
+                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      widget.product.description.uz.trim(),
+                                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: double.infinity,
+                                margin: const EdgeInsets.symmetric(vertical: 6),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.product.title.uz,
+                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      widget.product.description.uz.trim(),
+                                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: double.infinity,
+                                margin: const EdgeInsets.symmetric(vertical: 6),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.product.title.uz,
+                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      widget.product.description.uz.trim(),
+                                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: double.infinity,
+                                margin: const EdgeInsets.symmetric(vertical: 6),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.product.title.uz,
+                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      widget.product.description.uz.trim(),
+                                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: double.infinity,
+                                margin: const EdgeInsets.symmetric(vertical: 6),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.product.title.uz,
+                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      widget.product.description.uz.trim(),
+                                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                  SliverToBoxAdapter(
-                    child: Column(
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          margin: const EdgeInsets.symmetric(vertical: 6),
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.18,
+                  )
+                ],
+              ),
+              Column(
+                children: [
+                  const Expanded(
+                    child: SizedBox(),
+                  ),
+                  Material(
+                    color: Colors.white,
+                    elevation: 5,
+                    child: Container(
+                      padding: const EdgeInsets.all(15),
+                      height: MediaQuery.of(context).size.height * 0.18,
+                      child: Column(
+                        children: [
+                          Expanded(
+                              child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(widget.product.title.uz,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18),),
-                              const SizedBox(height: 10,),
-                              Text(widget.product.description.uz.trim(),
-                                style: TextStyle(
-                                    color: Colors.grey[500], fontSize: 15),),
+                              Container(
+                                margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.005),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(6), border: Border.all(color: Colors.grey[300]!, width: 0.8, strokeAlign: BorderSide.strokeAlignOutside)),
+                                child: Row(
+                                  children: [
+                                    IconButton(
+                                        padding: const EdgeInsets.all(5),
+                                        onPressed: () {
+                                          bloc.add(ProductDecrement(context: context));
+                                          bloc.add(LoadProduct(product: widget.product, alreadyHave: true));
+                                        },
+                                        icon: const Icon(Icons.remove)),
+                                    SizedBox(
+                                      width: 20,
+                                      child: Center(
+                                          child: Text(
+                                        state.productCount.toString(),
+                                        style: const TextStyle(fontSize: 17),
+                                      )),
+                                    ),
+                                    IconButton(
+                                        padding: const EdgeInsets.all(5),
+                                        onPressed: () {
+                                          bloc.add(ProductIncrement(mustIncrement: true));
+                                          // bloc.add(LoadProduct(product: widget.product,alreadyHave: true));
+                                        },
+                                        icon: const Icon(Icons.add)),
+                                  ],
+                                ),
+                              ),
+                              Text(
+                                 "${state.productData.price * state.productCount}  so\'m,",
+                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                              )
                             ],
+                          )),
+                          const SizedBox(
+                            height: 10,
                           ),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          margin: const EdgeInsets.symmetric(vertical: 6),
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
+                          Material(
+                            color: const Color(0xff51267D),
                             borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(widget.product.title.uz,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18),),
-                              const SizedBox(height: 10,),
-                              Text(widget.product.description.uz.trim(),
-                                style: TextStyle(
-                                    color: Colors.grey[500], fontSize: 15),),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          margin: const EdgeInsets.symmetric(vertical: 6),
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(widget.product.title.uz,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18),),
-                              const SizedBox(height: 10,),
-                              Text(widget.product.description.uz.trim(),
-                                style: TextStyle(
-                                    color: Colors.grey[500], fontSize: 15),),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          margin: const EdgeInsets.symmetric(vertical: 6),
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(widget.product.title.uz,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18),),
-                              const SizedBox(height: 10,),
-                              Text(widget.product.description.uz.trim(),
-                                style: TextStyle(
-                                    color: Colors.grey[500], fontSize: 15),),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          margin: const EdgeInsets.symmetric(vertical: 6),
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(widget.product.title.uz,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18),),
-                              const SizedBox(height: 10,),
-                              Text(widget.product.description.uz.trim(),
-                                style: TextStyle(
-                                    color: Colors.grey[500], fontSize: 15),),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          margin: const EdgeInsets.symmetric(vertical: 6),
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(widget.product.title.uz,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18),),
-                              const SizedBox(height: 10,),
-                              Text(widget.product.description.uz.trim(),
-                                style: TextStyle(
-                                    color: Colors.grey[500], fontSize: 15),),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          margin: const EdgeInsets.symmetric(vertical: 6),
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(widget.product.title.uz,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18),),
-                              const SizedBox(height: 10,),
-                              Text(widget.product.description.uz.trim(),
-                                style: TextStyle(
-                                    color: Colors.grey[500], fontSize: 15),),
-                            ],
-                          ),
-                        ),
-                      ],
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(10),
+                              onTap: () {
+                                if (state.isAdded && state.buttonMessage == "To Cart") {
+                                  print("AAAAAAAAAAAAA");
+                                  Navigator.pushReplacement(
+                                      context,
+                                      CupertinoPageRoute(
+                                          builder: (context) => const MainScreen(
+                                                position: 1,
+                                              )));
+                                } else {
+                                  print("BBBBBBBBBBBBBB");
+                                  bloc.add(AddProduct(
+                                      product: ProductData(
+                                          productId: widget.product.id,
+                                          price: widget.product.price,
+                                          currency: widget.product.currency,
+                                          image: widget.product.image,
+                                          title: widget.product.title.uz,
+                                          description: widget.product.description.uz,
+                                          amount: productCount),
+                                      context: context));
+                                  // buttonText = "To Cart";
+                                  bloc.add(LoadProduct(product: widget.product, alreadyHave: true));
+                                  setState(() {});
+                                }
+                              },
+                              child: SizedBox(
+                                  height: MediaQuery.of(context).size.height * 0.065,
+                                  child: Center(
+                                      child: Text( state.productData.amount == state.productCount ? 'To Cart' : state.buttonMessage, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white)))),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   )
                 ],
               ),
-            ),
-            Container(height: MediaQuery
-                .of(context)
-                .size
-                .height * 0.18,)
-          ],
-        ),
-        Column(
-          children: [
-            const Expanded(
-              child: SizedBox(),
-            ),
-            Material(
-              color: Colors.white,
-              elevation: 5,
-              child: Container(
-                padding: const EdgeInsets.all(15),
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.18,
-                child: Column(
-                  children: [
-                    Expanded(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.symmetric(
-                                  vertical:
-                                  MediaQuery
-                                      .of(context)
-                                      .size
-                                      .height * 0.005),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(6),
-                                  border: Border.all(
-                                      color: Colors.grey[300]!,
-                                      width: 0.8,
-                                      strokeAlign: BorderSide
-                                          .strokeAlignOutside)),
-                              child: Row(
-                                children: [
-                                  IconButton(
-                                      padding: const EdgeInsets.all(5),
-                                      onPressed: productCount > 1 ? dec : null,
-                                      icon: const Icon(Icons.remove)),
-                                  SizedBox(
-                                    width: 20,
-                                    child: Center(
-                                        child: Text(
-                                          '$productCount',
-                                          style: const TextStyle(fontSize: 17),
-                                        )),
-                                  ),
-                                  IconButton(
-                                      padding: EdgeInsets.all(5),
-                                      onPressed: inc,
-                                      icon: const Icon(Icons.add)),
-                                ],
+            ]),
+          );
+        } else {
+          print("LLLLLLLLL  isAdded false");
+          print("EEEEEEEEEEEEEE productData ${state.productData.amount}");
+          print("EEEEEEEEEEEEEE productCount ${state.productCount.toString()}");
+
+          return Scaffold(
+            backgroundColor: Colors.white,
+            body: Stack(children: [
+              Column(
+                children: [
+                  Expanded(
+                    child: CustomScrollView(
+                      slivers: [
+                        SliverAppBar(
+                          pinned: true,
+                          backgroundColor: Colors.white,
+                          automaticallyImplyLeading: false,
+                          scrolledUnderElevation: 0,
+                          expandedHeight: 260,
+                          leading: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: Colors.white,
+                                ),
+                                child: BackButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                )),
+                          ),
+                          actions: [
+                            Material(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(30),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(20),
+                                onTap: () async {
+                                  await shareApp();
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Icon(Icons.share),
+                                ),
                               ),
                             ),
-                            Text(
-                              '${widget.product.price * productCount} so\'m',
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
+                            const SizedBox(
+                              width: 10,
                             )
                           ],
-                        )),
-                    const SizedBox(
-                      height: 10,
+                          flexibleSpace: FlexibleSpaceBar(
+                            background: CachedNetworkImage(
+                              imageUrl: widget.product.image,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        SliverToBoxAdapter(
+                          child: Column(
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                margin: const EdgeInsets.symmetric(vertical: 6),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.product.title.uz,
+                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      widget.product.description.uz.trim(),
+                                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: double.infinity,
+                                margin: const EdgeInsets.symmetric(vertical: 6),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.product.title.uz,
+                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      widget.product.description.uz.trim(),
+                                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: double.infinity,
+                                margin: const EdgeInsets.symmetric(vertical: 6),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.product.title.uz,
+                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      widget.product.description.uz.trim(),
+                                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: double.infinity,
+                                margin: const EdgeInsets.symmetric(vertical: 6),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.product.title.uz,
+                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      widget.product.description.uz.trim(),
+                                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: double.infinity,
+                                margin: const EdgeInsets.symmetric(vertical: 6),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.product.title.uz,
+                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      widget.product.description.uz.trim(),
+                                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: double.infinity,
+                                margin: const EdgeInsets.symmetric(vertical: 6),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.product.title.uz,
+                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      widget.product.description.uz.trim(),
+                                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: double.infinity,
+                                margin: const EdgeInsets.symmetric(vertical: 6),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.product.title.uz,
+                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      widget.product.description.uz.trim(),
+                                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
                     ),
-                    Material(
-                      color: const Color(0xff51267D),
-                      borderRadius: BorderRadius.circular(10),
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(10),
-                        onTap: () {
-                          if(isAdded){
-                            Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => const MainScreen(position: 1,)));
-                          } else {
-                            dao.insertProduct(ProductData(
-                                productId: widget.product.id,
-                                price: widget.product.price,
-                                currency: widget.product.currency,
-                                image: widget.product.image,
-                                title: widget.product.title.uz,
-                                description: widget.product.description.uz,
-                                amount: productCount)
-                            ).then((value) {
-                              showToast(['Buyurtmangiz savatga qo\'shildi', 'Savatni tekshirishingiz mumkin'], context, gravity: ToastGravity.TOP,color: Colors.green);
-                            });
-                            isAdded = true;
-                            setState(() {});
-                          }
-                        },
-                        child: SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.065,
-                            child: Center(
-                                child: Text(
-                                    isAdded ? 'Savatga' : 'Qo\'shish',
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15,
-                                        color: Colors.white)))),
-                      ),
-                    )
-                  ],
-                ),
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.18,
+                  )
+                ],
               ),
-            )
-          ],
-        ),
-      ]),
+              Column(
+                children: [
+                  const Expanded(
+                    child: SizedBox(),
+                  ),
+                  Material(
+                    color: Colors.white,
+                    elevation: 5,
+                    child: Container(
+                      padding: const EdgeInsets.all(15),
+                      height: MediaQuery.of(context).size.height * 0.18,
+                      child: Column(
+                        children: [
+                          Expanded(
+                              child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.005),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(6), border: Border.all(color: Colors.grey[300]!, width: 0.8, strokeAlign: BorderSide.strokeAlignOutside)),
+                                child: Row(
+                                  children: [
+                                    IconButton(
+                                        padding: const EdgeInsets.all(5),
+                                        onPressed: () {
+                                          bloc.add(ProductDecrement(context: context));
+                                        },
+                                        icon: const Icon(Icons.remove)),
+                                    SizedBox(
+                                      width: 20,
+                                      child: Center(
+                                          child: Text(
+                                        state.productCount.toString(),
+                                        style: const TextStyle(fontSize: 17),
+                                      )),
+                                    ),
+                                    IconButton(
+                                        padding: const EdgeInsets.all(5),
+                                        onPressed: () {
+                                          bloc.add(ProductIncrement(mustIncrement: false));
+                                        },
+                                        icon: const Icon(Icons.add)),
+                                  ],
+                                ),
+                              ),
+                              Text(
+                                "${widget.product.price * state.productCount} so'm",
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              )
+                            ],
+                          )),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Material(
+                            color: const Color(0xff51267D),
+                            borderRadius: BorderRadius.circular(10),
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(10),
+                              onTap: () {
+                                if (state.buttonMessage == "To Cart") {
+                                  print("Product COUNT -> ${state.productCount}");
+                                  Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => CartPage()));
+                                }
+
+                                if (state.buttonMessage == "Add") {
+                                  print("Product COUNT -> ${state.productCount}");
+                                  bloc.add(AddProduct(
+                                      product: ProductData(
+                                          productId: widget.product.id,
+                                          price: widget.product.price,
+                                          currency: widget.product.currency,
+                                          image: widget.product.image,
+                                          title: widget.product.title.uz,
+                                          description: widget.product.description.uz,
+                                          amount: state.productCount),
+                                      context: context));
+                                  bloc.add(LoadProduct(product: widget.product, alreadyHave: true));
+                                }
+                              },
+                              child: Container(
+                                  width: double.infinity,
+                                  height: 56,
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: const Color(0xFF51267D)),
+                                  child: Center(
+                                      child: Text(
+                                    state.buttonMessage,
+                                    style: const TextStyle(color: Colors.white, fontSize: 18),
+                                  ))),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ]),
+          );
+        }
+      },
     );
   }
 }

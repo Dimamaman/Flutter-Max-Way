@@ -13,7 +13,7 @@ abstract class ProductDao {
   @Query('SELECT * FROM ProductData')
   Stream<List<ProductData>> streamedData();
 
-  @insert
+  @Insert(onConflict: OnConflictStrategy.replace)
   Future<void> insertProduct(ProductData product);
 
   @Query('DELETE FROM ProductData where productId = :id')

@@ -3,16 +3,16 @@ import 'package:floor/floor.dart';
 @entity
 class ProductData {
   @PrimaryKey(autoGenerate: false)
-  String productId;
-  int price;
-  String currency;
-  String image;
-  String title;
-  String description;
-  int amount;
+  final String productId;
+  final int price;
+  final String currency;
+  final String image;
+  final String title;
+  final String description;
+  final int amount;
 
 
-  ProductData({
+  const ProductData({
     required this.productId,
     required this.price,
     required this.currency,
@@ -21,5 +21,9 @@ class ProductData {
     required this.description,
     required this.amount
   });
+
+  factory ProductData.empty({productId = '', price = 0, currency = '', image = '', title = '', description = '', amount = 0}) {
+    return ProductData(productId: productId, price: price, currency: currency, image: image, title: title, description: description, amount: amount);
+  }
 }
 

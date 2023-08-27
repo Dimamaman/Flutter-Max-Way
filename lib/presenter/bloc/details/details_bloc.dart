@@ -19,11 +19,22 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
       switch (event) {
         case AddProduct():
           _onAddProduct(event, emit, event.product, event.context);
+          break;
+
         case ProductIncrement():
-          _onProductIncrement(event, emit);
+          _onProductIncrement(event, emit, event.mustIncrement);
+          break;
 
         case ProductDecrement():
           _onProductDecrement(event, emit, event.context);
+          break;
+
+        case LoadProduct():
+          await _onLoadProduct(event, emit, event.product, event.alreadyHave);
+          break;
+        // case UpdateProduct():
+        //   await _onUpDateProduct(event, emit, event.product, event.context);
+        //   break;
       }
     });
   }
@@ -32,33 +43,71 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
     if (state.state == UIState.loading) return;
     emit(state.copyWith(state: UIState.loading));
 
-    try{
+    try {
       _productDao.insertProduct(product);
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Product added to Cart')));
-    }catch(e) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Product added to Cart')));
+      emit(state.copyWith(state: UIState.success, buttonMessage: "To Cart"));
+    } catch (e) {
       emit(state.copyWith(state: UIState.error, errorMessage: "$e"));
     }
   }
 
-  void _onProductIncrement(ProductIncrement event, Emitter<DetailsState> emit) {
-    var tempt = state.productCount;
-    tempt++;
-    emit(state.copyWith(productCount: tempt));
+  // Future<void> _onUpDateProduct(UpdateProduct event, Emitter<DetailsState> emit, ProductData product, BuildContext context) async {
+  //   if (state.state == UIState.loading) return;
+  //   emit(state.copyWith(state: UIState.loading));
+  //   try {
+  //     _productDao.insertProduct(product);
+  //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Product updated')));
+  //     emit(state.copyWith(state: UIState.success, buttonMessage: "To Cart"));
+  //   } catch (e) {
+  //     emit(state.copyWith(state: UIState.error, errorMessage: "$e"));
+  //   }
+  //
+  // }
+
+  void _onProductIncrement(ProductIncrement event, Emitter<DetailsState> emit, bool mustIncrement) {
+    if (mustIncrement) {
+      var temp = state.productCount;
+      print("VVVVVVVV $temp");
+      temp++;
+      print("VVVVVVVV $temp");
+      emit(state.copyWith(productCount: temp, buttonMessage: "Add"));
+    } else {
+      var tempt = state.productCount;
+      tempt++;
+      emit(state.copyWith(productCount: tempt, buttonMessage: "Add"));
+    }
   }
 
   void _onProductDecrement(ProductDecrement event, Emitter<DetailsState> emit, BuildContext context) {
     var temp = state.productCount;
     temp--;
-    if(temp < 1) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Product kamida 1 ta bo'lishi kk")));
+    if (temp < 1) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Product kamida 1 ta bo'lishi kk")));
     }
 
-    if(state.productCount > 1) {
+    if (state.productCount > 1) {
       var tempt = state.productCount;
       tempt--;
-      emit(state.copyWith(productCount: tempt));
+      emit(state.copyWith(productCount: tempt, buttonMessage: "Add"));
+    }
+  }
+
+  Future<void> _onLoadProduct(LoadProduct event, Emitter<DetailsState> emit, Product product, bool alreadyHave) async {
+    var isAdded = alreadyHave;
+    late ProductData productData1;
+
+    for (ProductData productData in await _productDao.getAllProducts()) {
+      if (productData.title == product.title.uz) {
+        isAdded = true;
+        productData1 = productData;
+        break;
+      }
+    }
+    if (isAdded) {
+      emit(state.copyWith(isAdded: isAdded, productData: productData1, productCount: productData1.amount, buttonMessage: "To Cart"));
+    } else {
+      emit(state.copyWith(isAdded: isAdded));
     }
   }
 }

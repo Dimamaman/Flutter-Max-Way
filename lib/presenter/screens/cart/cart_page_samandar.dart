@@ -106,15 +106,14 @@ class _CartPageState extends State<CartPage> {
                           itemCount: snapshot.data!.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
-                              padding: EdgeInsets.symmetric(vertical: 10),
+                              padding: const EdgeInsets.symmetric(vertical: 10),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: ListTile(
                                 title: Text(snapshot.data![index].title),
-                                subtitle: Text(
-                                  snapshot.data![index].description,
+                                subtitle: Text("${snapshot.data![index].amount.toString()}    ${snapshot.data![index].price.toString() }  so'm",
                                   style: const TextStyle(fontSize: 10),
                                 ),
                                 trailing: SizedBox(

@@ -51,7 +51,7 @@ class CategoryItem extends StatelessWidget {
                         child: InkWell(
                             onTap: () {
                               isFirst ? Navigator.push(context, CupertinoPageRoute(builder: (context) => const Map_Page())) :
-                              Navigator.push(context, CupertinoPageRoute(builder: (context) => DetailPage(product: product)));
+                              Navigator.push(context, CupertinoPageRoute(builder: (context) => DetailPageSamandar(product: product)));
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 10),

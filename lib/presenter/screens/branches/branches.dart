@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_max_way/core/api/food_api.dart';
 import 'package:flutter_max_way/presenter/bloc/branches/branches_bloc.dart';
-import 'package:flutter_max_way/presenter/bloc/home/branch_page.dart';
+import 'package:flutter_max_way/presenter/screens/branches/branch_page.dart';
 import 'package:flutter_max_way/presenter/screens/widgets/branch_item.dart';
 import 'package:flutter_max_way/presenter/screens/widgets/branches_shimmer.dart';
 

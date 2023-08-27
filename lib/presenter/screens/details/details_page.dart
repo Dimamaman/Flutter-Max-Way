@@ -200,7 +200,7 @@ class _DetailPageState extends State<DetailPage> {
                                     ),
                                     IconButton(
                                         onPressed: () {
-                                          bloc.add(ProductIncrement());
+                                          bloc.add(ProductIncrement(mustIncrement: true));
                                         },
                                         icon: const Icon(Icons.add)),
                                   ],
