@@ -5,6 +5,7 @@ import 'package:flutter_max_way/presenter/screens/auth/phone.dart';
 import 'package:flutter_max_way/presenter/screens/cart/cart_page_samandar.dart';
 import 'package:flutter_max_way/presenter/screens/cart/cart_screen.dart';
 import 'package:flutter_max_way/presenter/screens/home/home_page.dart';
+import 'package:flutter_max_way/presenter/screens/my_orders/my_orders.dart';
 import 'package:flutter_max_way/presenter/screens/profile/profile_screen.dart';
 import 'package:flutter_max_way/presenter/utils/navigator.dart';
 import 'package:provider/provider.dart';
@@ -53,7 +54,7 @@ class _MainScreenState extends State<MainScreen> {
           index: _currentIndex,
           children: [Home_Page(a: false),
             CartPage(),
-            const OrdersScreen(),
+            MyOrdersScreen(),
             const ProfileScreen()
           ],
         ),
@@ -93,11 +94,3 @@ class _MainScreenState extends State<MainScreen> {
   }
 }
 
-class OrdersScreen extends StatelessWidget {
-  const OrdersScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('Orders Screen'));
-  }
-}
