@@ -51,49 +51,6 @@ class _SelectLangState extends State<SelectLang> {
                 ],
               ),
 
-              const SizedBox(
-                height: 10,
-              ),
-
-              Material(
-                color: const Color(0xFFEFEFEF),
-                borderRadius: BorderRadius.circular(10),
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(10),
-                  onTap: () async {
-                    await Future.delayed(const Duration(milliseconds: 50));
-                    pref.setLang(true);
-                    Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => MainScreen()));
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.transparent,
-                    ),
-                    child: const Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: CircleAvatar(
-                            radius: 25, // Image radius
-                            backgroundImage: AssetImage(
-                              'assets/images/uzb3.png',
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          "O'zbekcha",
-                          style: TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-
               const SizedBox(height: 10),
 
               Container(
@@ -128,7 +85,7 @@ class _SelectLangState extends State<SelectLang> {
                 width: double.infinity,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Color(0xFFF7F7F7)),
+                    color: const Color(0xFFF7F7F7)),
                 child: const Row(
                   children: [
                     Padding(
@@ -136,17 +93,59 @@ class _SelectLangState extends State<SelectLang> {
                       child: CircleAvatar(
                         radius: 25, // Image radius
                         backgroundImage: AssetImage(
-                          'assets/images/uk1.webp',
+                          'assets/images/uzb3.png',
                         ),
                       ),
                     ),
                     SizedBox(width: 5),
                     Text(
-                      "Egnlish",
+                      "O'zbekcha",
                       style: TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold),
                     )
                   ],
+                ),
+              ),
+
+              const SizedBox(
+                height: 10,
+              ),
+
+              Material(
+                color: const Color(0xFFEFEFEF),
+                borderRadius: BorderRadius.circular(10),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(10),
+                  onTap: () {
+                    pref.setLang(true);
+                    Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => MainScreen()));
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.transparent,
+                    ),
+                    child: const Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: CircleAvatar(
+                            radius: 25, // Image radius
+                            backgroundImage: AssetImage(
+                              'assets/images/uk1.webp',
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          "English",
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ],

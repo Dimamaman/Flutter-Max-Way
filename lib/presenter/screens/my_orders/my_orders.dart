@@ -30,7 +30,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('My Orders',style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text('My Orders',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
         automaticallyImplyLeading: false,
         centerTitle: true,
         backgroundColor: Colors.white,

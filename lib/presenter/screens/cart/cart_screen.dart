@@ -150,7 +150,7 @@ class _CartScreenState extends State<CartScreen> {
         Container(
           color: Colors.white,
           padding: const EdgeInsets.all(15),
-          height: widget.products.isEmpty ? MediaQuery.of(context).size.height * 0.10 : MediaQuery.of(context).size.height * 0.16,
+          height: widget.products.isEmpty ? MediaQuery.of(context).size.height * 0.12 : MediaQuery.of(context).size.height * 0.16,
           child:  widget.products.isNotEmpty
               ? Column(
                 children: [
@@ -182,9 +182,9 @@ class _CartScreenState extends State<CartScreen> {
                       onTap: () {
                         Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => const MainScreen()));
                       },
-                      child: const SizedBox(
-                          height: 54,
-                          child: Center(
+                      child:  SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.065,
+                          child: const Center(
                               child: Text(
                                   'Buyurtmani rasmiylashtirish',
                                   style: TextStyle(
@@ -204,7 +204,7 @@ class _CartScreenState extends State<CartScreen> {
                   Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => const MainScreen()));
               },
               child: SizedBox(
-                  height: 54,
+                  height: MediaQuery.of(context).size.height * 0.065,
                   child: Center(
                       child: Text(
                           widget.products.isNotEmpty ? 'Buyurtmani rasmiylashtirish' : 'Mahsulot qo\'shing',

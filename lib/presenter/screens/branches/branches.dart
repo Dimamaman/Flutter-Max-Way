@@ -47,7 +47,7 @@ class _BranchesScreenState extends State<BranchesScreen> {
               backgroundColor: Colors.white,
               title: const Text(
                 "Filiallar",
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
               ),
             ),
             body: SingleChildScrollView(

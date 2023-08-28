@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_max_way/presenter/utils/toast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../core/floor/dao/dao.dart';
 import '../../../core/model/model.dart';
@@ -45,7 +47,7 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
 
     try {
       _productDao.insertProduct(product);
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Product added to Cart')));
+      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(duration: Duration(milliseconds: 500),content: Text('Product added to Cart')));
       emit(state.copyWith(state: UIState.success, buttonMessage: "To Cart"));
     } catch (e) {
       emit(state.copyWith(state: UIState.error, errorMessage: "$e"));
@@ -83,7 +85,8 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
     var temp = state.productCount;
     temp--;
     if (temp < 1) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Product kamida 1 ta bo'lishi kk")));
+      showToast(["Product kamida 1 ta bo'lishi kk"], context,gravity: ToastGravity.TOP);
+      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(duration: Duration(milliseconds: 500),content: Text("Product kamida 1 ta bo'lishi kk")));
     }
 
     if (state.productCount > 1) {

@@ -57,10 +57,6 @@ class _DetailScreenState extends State<DetailScreen> {
       builder: (context, state) {
         productCount = state.productCount;
         if (state.isAdded) {
-          print("LLLLLLLLL  isAdded true");
-          print("LLLLLLLLL  amount ${state.productData.amount}");
-          print("LLLLLLLLL  count ${state.productCount}");
-          print("ZZZZZZZZZ  button message ${state.buttonMessage}");
           return Scaffold(
             backgroundColor: Colors.white,
             body: Stack(children: [
@@ -389,6 +385,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                       context: context));
                                   // buttonText = "To Cart";
                                   bloc.add(LoadProduct(product: widget.product, alreadyHave: true));
+                                  showToast(['Product added to Cart','Check the Cart'], context,gravity: ToastGravity.TOP);
                                   setState(() {});
                                 }
                               },
@@ -407,10 +404,6 @@ class _DetailScreenState extends State<DetailScreen> {
             ]),
           );
         } else {
-          print("LLLLLLLLL  isAdded false");
-          print("EEEEEEEEEEEEEE productData ${state.productData.amount}");
-          print("EEEEEEEEEEEEEE productCount ${state.productCount.toString()}");
-
           return Scaffold(
             backgroundColor: Colors.white,
             body: Stack(children: [
@@ -719,12 +712,10 @@ class _DetailScreenState extends State<DetailScreen> {
                               borderRadius: BorderRadius.circular(10),
                               onTap: () {
                                 if (state.buttonMessage == "To Cart") {
-                                  print("Product COUNT -> ${state.productCount}");
                                   Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => CartScreen()));
                                 }
 
                                 if (state.buttonMessage == "Add") {
-                                  print("Product COUNT -> ${state.productCount}");
                                   bloc.add(AddProduct(
                                       product: ProductData(
                                           productId: widget.product.id,
@@ -736,19 +727,18 @@ class _DetailScreenState extends State<DetailScreen> {
                                           amount: state.productCount),
                                       context: context));
                                   bloc.add(LoadProduct(product: widget.product, alreadyHave: true));
-                                  // var a = context.watch<BadgeProvider>().badgeValue;
-                                  // var a = Provider.of<BadgeProvider>(context, listen: false).badgeValue;
+                                  showToast(['Product added to Cart','Check the Cart'], context,gravity: ToastGravity.TOP);
                                   context.read<BadgeProvider>().increment();
                                 }
                               },
                               child: Container(
                                   width: double.infinity,
-                                  height: 56,
+                                  height: MediaQuery.of(context).size.height * 0.065,
                                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: const Color(0xFF51267D)),
                                   child: Center(
                                       child: Text(
                                     state.buttonMessage,
-                                    style: const TextStyle(color: Colors.white, fontSize: 18),
+                                    style: const TextStyle(color: Colors.white, fontSize: 15),
                                   ))),
                             ),
                           )

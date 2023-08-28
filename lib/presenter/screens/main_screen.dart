@@ -57,12 +57,13 @@ class _MainScreenState extends State<MainScreen> {
           index: _currentIndex,
           children: [Home_Page(a: false),
             CartScreen(),
-            const MyOrdersScreen(),
-            const ProfileScreen()
+            isLogged ? const MyOrdersScreen() : const MyPhone(),
+            isLogged ? const ProfileScreen() : const MyPhone()
           ],
         ),
         //body: _screens[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
           onTap: (index) {

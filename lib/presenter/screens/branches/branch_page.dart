@@ -40,7 +40,7 @@ class _BranchPageState extends State<BranchPage> {
         scrolledUnderElevation: 0,
         title: const Text(
           'Filiallar',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
         ),
       ),
       body: SingleChildScrollView(
@@ -62,6 +62,7 @@ class _BranchPageState extends State<BranchPage> {
                   ),
                 ),
               ),
+
               Padding(
                 padding: const EdgeInsets.all(15),
                 child: Text(
@@ -70,6 +71,7 @@ class _BranchPageState extends State<BranchPage> {
                       fontSize: 17, fontWeight: FontWeight.bold),
                 ),
               ),
+
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 height: MediaQuery.of(context).size.height * 0.1,
@@ -102,7 +104,9 @@ class _BranchPageState extends State<BranchPage> {
                   ],
                 ),
               ),
+
               const Divider(height: 1, indent: 15, endIndent: 15,),
+
               InkWell(
                 onTap: () {
                   MapsLauncher.launchCoordinates(widget.branch.location.lat, widget.branch.location.long);
@@ -140,7 +144,9 @@ class _BranchPageState extends State<BranchPage> {
                   ),
                 ),
               ),
+
               const Divider(height: 1, indent: 15, endIndent: 15,),
+
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 height: MediaQuery.of(context).size.height * 0.1,
