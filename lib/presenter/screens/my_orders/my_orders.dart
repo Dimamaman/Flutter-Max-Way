@@ -42,12 +42,13 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
             const SizedBox(height: 10),
             Container(
               height: 45,
-              width: MediaQuery.of(context).size.width - 30,
+              width: MediaQuery.of(context).size.width * 0.9,
               decoration: BoxDecoration(
                   color: const Color(0xFFF5F5F5),
                   borderRadius: BorderRadius.circular(10)),
               child: TabBar(
-                padding: const EdgeInsets.only(top: 3,bottom: 3),
+                padding: const EdgeInsets.all(3),
+                indicatorSize: TabBarIndicatorSize.tab,
                 labelStyle: const TextStyle(fontSize: 13,fontWeight: FontWeight.bold),
                 unselectedLabelColor: Colors.grey,
                 labelColor: Colors.black,
