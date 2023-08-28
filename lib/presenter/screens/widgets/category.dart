@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_max_way/presenter/screens/details/detail_page_samandar.dart';
+import 'package:flutter_max_way/presenter/screens/details/detail_screen.dart';
 import 'package:flutter_max_way/presenter/screens/map_screen/map_page.dart';
 
 import '../../../core/model/model.dart';
@@ -51,7 +51,7 @@ class CategoryItem extends StatelessWidget {
                         child: InkWell(
                             onTap: () {
                               isFirst ? Navigator.push(context, CupertinoPageRoute(builder: (context) => const Map_Page())) :
-                              Navigator.push(context, CupertinoPageRoute(builder: (context) => DetailPageSamandar(product: product)));
+                              Navigator.push(context, CupertinoPageRoute(builder: (context) => DetailScreen(product: product)));
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 10),

@@ -14,20 +14,20 @@ import '../../bloc/details/details_bloc.dart';
 import '../../utils/badges.dart';
 import '../../utils/navigator.dart';
 import '../../utils/toast.dart';
-import '../cart/cart_page_samandar.dart';
+import '../cart/cart_screen.dart';
 import '../cart/cart_screen.dart';
 import '../main_screen.dart';
 
-class DetailPageSamandar extends StatefulWidget {
+class DetailScreen extends StatefulWidget {
   final Product product;
 
-  const DetailPageSamandar({super.key, required this.product});
+  const DetailScreen({super.key, required this.product});
 
   @override
-  State<DetailPageSamandar> createState() => _DetailPageSamandarState();
+  State<DetailScreen> createState() => _DetailScreenState();
 }
 
-class _DetailPageSamandarState extends State<DetailPageSamandar> {
+class _DetailScreenState extends State<DetailScreen> {
 
 
   final dao = getIt<AppDatabase>().productDao;
@@ -720,7 +720,7 @@ class _DetailPageSamandarState extends State<DetailPageSamandar> {
                               onTap: () {
                                 if (state.buttonMessage == "To Cart") {
                                   print("Product COUNT -> ${state.productCount}");
-                                  Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => CartPage()));
+                                  Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => CartScreen()));
                                 }
 
                                 if (state.buttonMessage == "Add") {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_max_way/core/floor/database/database.dart';
 import 'package:flutter_max_way/presenter/screens/auth/phone.dart';
-import 'package:flutter_max_way/presenter/screens/cart/cart_page_samandar.dart';
+import 'package:flutter_max_way/presenter/screens/cart/cart_screen.dart';
 import 'package:flutter_max_way/presenter/screens/cart/cart_screen.dart';
 import 'package:flutter_max_way/presenter/screens/home/home_page.dart';
 import 'package:flutter_max_way/presenter/screens/my_orders/my_orders.dart';
@@ -32,6 +32,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     next();
+    // context.watch<BadgeProvider>().updateBadgeValue(badges);
     _currentIndex = widget.position;
     super.initState();
   }
@@ -40,6 +41,7 @@ class _MainScreenState extends State<MainScreen> {
     isLogged = await pref.getIsLogged();
     var temp = await getIt<AppDatabase>().productDao.getAllProducts();
     badges = temp.length;
+    print("RRRRRRR badges -> $badges");
     setState(() {});
     print("PPPPPPPPPPPPP ${badges}");
     // await Future.delayed(const Duration(milliseconds: 2000));
@@ -47,14 +49,15 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("NNNNNNNNNNN Main initState");
     return Consumer<BadgeProvider>(
       builder: (context, value, child) => Scaffold(
         backgroundColor: const Color(0xFFF6F6F6),
         body: IndexedStack(
           index: _currentIndex,
           children: [Home_Page(a: false),
-            CartPage(),
-            MyOrdersScreen(),
+            CartScreen(),
+            const MyOrdersScreen(),
             const ProfileScreen()
           ],
         ),
@@ -73,11 +76,11 @@ class _MainScreenState extends State<MainScreen> {
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Badge(
-                label: Text('${context.watch<BadgeProvider>().badgeValue}'),
+              icon: context.watch<BadgeProvider>().badgeValue > 0 ? Badge(
+                label: Text("${context.watch<BadgeProvider>().badgeValue}"),
                 child: const Icon(Icons.shopping_cart),
-              ),
-              label: 'Cart',
+              ): const Icon(Icons.shopping_cart),
+              label: 'Cart'
             ),
             const BottomNavigationBarItem(
               icon: Icon(Icons.shopping_bag),

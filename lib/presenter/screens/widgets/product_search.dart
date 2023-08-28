@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_max_way/presenter/screens/details/details_page.dart';
-import 'package:flutter_max_way/presenter/utils/navigator.dart';
+import 'package:flutter_max_way/presenter/screens/details/detail_screen.dart';
 
 import '../../../core/model/model.dart';
 
@@ -21,7 +20,7 @@ class ProductSearchItem extends StatelessWidget {
       color: Colors.white,
       child: InkWell(
         onTap: () {
-          Navigator.push(context, CupertinoPageRoute(builder: (_) => DetailPage(product: product)));
+          Navigator.push(context, CupertinoPageRoute(builder: (_) => DetailScreen(product: product)));
         },
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 5),
