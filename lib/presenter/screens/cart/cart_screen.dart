@@ -61,7 +61,7 @@ class _CartScreenState extends State<CartScreen> {
         ),
         actions: isEmpty ? [] : [
           IconButton(onPressed: () {
-                widget._productDao.deleteAll(widget.products);
+                widget._productDao.deleteAll();
                 context.read<BadgeProvider>().updateBadgeValue(0);
                 setState(() {});
             }, icon: const Icon(Icons.delete_outline, color: Colors.blueGrey,)),

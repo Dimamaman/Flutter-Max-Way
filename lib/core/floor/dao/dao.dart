@@ -19,6 +19,6 @@ abstract class ProductDao {
   @Query('DELETE FROM ProductData where productId = :id')
   Future<void> deleteTodo(String id);
 
-  @delete
-  Future<int> deleteAll(List<ProductData> list);
+  @Query('DELETE FROM ProductData')
+  Future<void> deleteAll();
 }

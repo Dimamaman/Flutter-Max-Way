@@ -1,7 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_max_way/presenter/pref/location_pref.dart';
+import 'package:flutter_max_way/presenter/screens/main_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../core/floor/database/database.dart';
+import '../../../di/floor_module.dart';
 import '../widgets/my_bottomsheet.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -13,6 +18,9 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
 
   bool light = false;
+  final auth = FirebaseAuth.instance;
+  final pref = LocationPref();
+  final _productDao = getIt<AppDatabase>().productDao;
 
   @override
   void initState() {
@@ -122,8 +130,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
               borderRadius: BorderRadius.circular(10),
               color: Colors.white,
               child: InkWell(
-                onTap: () {
+                onTap: () async {
                   // Navigator.push(context, CupertinoPageRoute(builder: (_) => const AboutUs()));
+                  auth.signOut();
+                  pref.setIsLogged(false);
+                  pref.setPosition('');
+                  pref.setPhone('');
+                  pref.setName('');
+                  _productDao.deleteAll();
+                  Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => const MainScreen()));
                 },
                 child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 5),
