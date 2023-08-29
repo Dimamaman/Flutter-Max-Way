@@ -36,6 +36,7 @@ class ProductIncrement extends DetailsEvent {
 
 class ProductDecrement extends DetailsEvent{
   final BuildContext context;
+  bool mustIncrement;
 
-  ProductDecrement({required this.context});
+  ProductDecrement({required this.context,required this.mustIncrement});
 }

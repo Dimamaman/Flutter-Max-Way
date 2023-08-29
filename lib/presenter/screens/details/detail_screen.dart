@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_max_way/presenter/screens/details/recommend.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -20,8 +21,9 @@ import '../main_screen.dart';
 
 class DetailScreen extends StatefulWidget {
   final Product product;
+  final Category recommended;
 
-  const DetailScreen({super.key, required this.product});
+  const DetailScreen({super.key, required this.product, required this.recommended});
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -188,106 +190,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                   ],
                                 ),
                               ),
-                              Container(
-                                width: double.infinity,
-                                margin: const EdgeInsets.symmetric(vertical: 6),
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      widget.product.title.uz,
-                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      widget.product.description.uz.trim(),
-                                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: double.infinity,
-                                margin: const EdgeInsets.symmetric(vertical: 6),
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      widget.product.title.uz,
-                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      widget.product.description.uz.trim(),
-                                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: double.infinity,
-                                margin: const EdgeInsets.symmetric(vertical: 6),
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      widget.product.title.uz,
-                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      widget.product.description.uz.trim(),
-                                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: double.infinity,
-                                margin: const EdgeInsets.symmetric(vertical: 6),
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      widget.product.title.uz,
-                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      widget.product.description.uz.trim(),
-                                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              Recommendation(deserts: widget.recommended)
                             ],
                           ),
                         )
@@ -326,8 +229,8 @@ class _DetailScreenState extends State<DetailScreen> {
                                     IconButton(
                                         padding: const EdgeInsets.all(5),
                                         onPressed: () {
-                                          bloc.add(ProductDecrement(context: context));
-                                          bloc.add(LoadProduct(product: widget.product, alreadyHave: true));
+                                          bloc.add(ProductDecrement(context: context, mustIncrement: true));
+                                          // bloc.add(LoadProduct(product: widget.product, alreadyHave: true));
                                         },
                                         icon: const Icon(Icons.remove)),
                                     SizedBox(
@@ -560,81 +463,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                   ],
                                 ),
                               ),
-                              Container(
-                                width: double.infinity,
-                                margin: const EdgeInsets.symmetric(vertical: 6),
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      widget.product.title.uz,
-                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      widget.product.description.uz.trim(),
-                                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: double.infinity,
-                                margin: const EdgeInsets.symmetric(vertical: 6),
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      widget.product.title.uz,
-                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      widget.product.description.uz.trim(),
-                                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: double.infinity,
-                                margin: const EdgeInsets.symmetric(vertical: 6),
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      widget.product.title.uz,
-                                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      widget.product.description.uz.trim(),
-                                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              Recommendation(deserts: widget.recommended)
                             ],
                           ),
                         )
@@ -673,7 +502,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                     IconButton(
                                         padding: const EdgeInsets.all(5),
                                         onPressed: () {
-                                          bloc.add(ProductDecrement(context: context));
+                                          bloc.add(ProductDecrement(context: context, mustIncrement: false));
                                         },
                                         icon: const Icon(Icons.remove)),
                                     SizedBox(

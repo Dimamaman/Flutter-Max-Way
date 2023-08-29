@@ -22,7 +22,8 @@ class Home_Page extends StatefulWidget {
 }
 
 class _Home_PageState extends State<Home_Page> {
-  var category = <Category>[];
+  var categories = <Category>[];
+  var recommended = Category.empty();
   final bloc = FoodBloc(FoodApi());
   final _searchController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
@@ -33,7 +34,6 @@ class _Home_PageState extends State<Home_Page> {
 
   @override
   void initState() {
-    print("NNNNNNNNNNN Home initState");
     bloc.add(LoadFoodEvent());
     getLocation();
 
@@ -70,6 +70,12 @@ class _Home_PageState extends State<Home_Page> {
     return BlocBuilder<FoodBloc, FoodState>(
       bloc: bloc,
       builder: (context, state) {
+        for(Category recommend in state.list) {
+          if(recommend.title.uz.contains("Desertlar")) {
+            print("NNNNNNNNNNN Home initState");
+            recommended = recommend;
+          }
+        }
         return Scaffold(
           backgroundColor: const Color(0xFFF6F6F6),
           body: SafeArea(
@@ -286,7 +292,7 @@ class _Home_PageState extends State<Home_Page> {
                             itemCount: state.list[0].products.length,
                             itemBuilder: (_, index) {
                               final product = state.list[0].products[index];
-                              return ProductSearchItem(product: product);
+                              return ProductSearchItem(product: product,recommended: recommended,);
                             }),
                       );
                     }
@@ -299,7 +305,7 @@ class _Home_PageState extends State<Home_Page> {
                       itemCount: state.list.length,
                       itemBuilder: (_, i) {
                         final category = state.list[i];
-                        return CategoryItem(category: category, isFirst: isFirst,);
+                        return CategoryItem(category: category, isFirst: isFirst,recommended: recommended,);
                       },
                     );
                   }),

@@ -11,10 +11,12 @@ class CategoryItem extends StatelessWidget {
   const CategoryItem({
     super.key,
     required this.category,
-    required this.isFirst
+    required this.isFirst,
+    required this.recommended
   });
 
   final Category category;
+  final Category recommended;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +53,7 @@ class CategoryItem extends StatelessWidget {
                         child: InkWell(
                             onTap: () {
                               isFirst ? Navigator.push(context, CupertinoPageRoute(builder: (context) => const Map_Page())) :
-                              Navigator.push(context, CupertinoPageRoute(builder: (context) => DetailScreen(product: product)));
+                              Navigator.push(context, CupertinoPageRoute(builder: (context) => DetailScreen(product: product,recommended: recommended)));
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 10),

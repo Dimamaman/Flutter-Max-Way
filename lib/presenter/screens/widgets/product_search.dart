@@ -8,9 +8,11 @@ class ProductSearchItem extends StatelessWidget {
   const ProductSearchItem({
     super.key,
     required this.product,
+    required this.recommended
   });
 
   final Product product;
+  final Category recommended;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class ProductSearchItem extends StatelessWidget {
       color: Colors.white,
       child: InkWell(
         onTap: () {
-          Navigator.push(context, CupertinoPageRoute(builder: (_) => DetailScreen(product: product)));
+          Navigator.push(context, CupertinoPageRoute(builder: (_) => DetailScreen(product: product, recommended: recommended,)));
         },
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 5),

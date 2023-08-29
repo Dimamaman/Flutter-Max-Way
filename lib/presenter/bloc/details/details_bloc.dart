@@ -28,7 +28,7 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
           break;
 
         case ProductDecrement():
-          _onProductDecrement(event, emit, event.context);
+          _onProductDecrement(event, emit, event.context,event.mustIncrement);
           break;
 
         case LoadProduct():
@@ -81,19 +81,43 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
     }
   }
 
-  void _onProductDecrement(ProductDecrement event, Emitter<DetailsState> emit, BuildContext context) {
-    var temp = state.productCount;
-    temp--;
-    if (temp < 1) {
-      showToast(["Product kamida 1 ta bo'lishi kk"], context,gravity: ToastGravity.TOP);
-      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(duration: Duration(milliseconds: 500),content: Text("Product kamida 1 ta bo'lishi kk")));
+  void _onProductDecrement(ProductDecrement event, Emitter<DetailsState> emit, BuildContext context, bool mustIncrement) {
+
+    if(mustIncrement) {
+      print("HHHHHHHH Kirdi");
+      var temp = state.productCount;
+      print("VVVVVVVV $temp");
+      temp--;
+      print("VVVVVVVV $temp");
+      if (temp < 1) {
+        showToast(["Product kamida 1 ta bo'lishi kk"], context,gravity: ToastGravity.TOP);
+        // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(duration: Duration(milliseconds: 500),content: Text("Product kamida 1 ta bo'lishi kk")));
+      }
+
+      if (state.productCount > 1) {
+        var tempt = state.productCount;
+        tempt--;
+        emit(state.copyWith(productCount: tempt, buttonMessage: "Add"));
+      }
+    } else {
+      print("HHHHHHHH ELSDE");
+      var temp = state.productCount;
+      print("VVVVVVVV $temp");
+      temp--;
+      print("VVVVVVVV $temp");
+      if (temp < 1) {
+        showToast(["Product kamida 1 ta bo'lishi kk"], context,gravity: ToastGravity.TOP);
+        // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(duration: Duration(milliseconds: 500),content: Text("Product kamida 1 ta bo'lishi kk")));
+      }
+
+      if (state.productCount > 1) {
+        var tempt = state.productCount;
+        tempt--;
+        emit(state.copyWith(productCount: tempt, buttonMessage: "Add"));
+      }
     }
 
-    if (state.productCount > 1) {
-      var tempt = state.productCount;
-      tempt--;
-      emit(state.copyWith(productCount: tempt, buttonMessage: "Add"));
-    }
+
   }
 
   Future<void> _onLoadProduct(LoadProduct event, Emitter<DetailsState> emit, Product product, bool alreadyHave) async {
