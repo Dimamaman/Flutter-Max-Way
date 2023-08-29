@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 import '../../di/floor_module.dart';
 import '../pref/location_pref.dart';
 import '../utils/badges.dart';
+import 'cart/cart_page.dart';
 
 class MainScreen extends StatefulWidget {
   final int position;
@@ -56,7 +57,7 @@ class _MainScreenState extends State<MainScreen> {
         body: IndexedStack(
           index: _currentIndex,
           children: [Home_Page(a: false),
-            CartScreen(),
+            CartPage(),
             isLogged ? const MyOrdersScreen() : const MyPhone(),
             isLogged ? const ProfileScreen() : const MyPhone()
           ],

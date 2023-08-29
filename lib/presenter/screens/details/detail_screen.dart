@@ -15,6 +15,7 @@ import '../../bloc/details/details_bloc.dart';
 import '../../utils/badges.dart';
 import '../../utils/navigator.dart';
 import '../../utils/toast.dart';
+import '../cart/cart_page.dart';
 import '../cart/cart_screen.dart';
 import '../cart/cart_screen.dart';
 import '../main_screen.dart';
@@ -541,7 +542,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               borderRadius: BorderRadius.circular(10),
                               onTap: () {
                                 if (state.buttonMessage == "To Cart") {
-                                  Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => CartScreen()));
+                                  Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => CartPage()));
                                 }
 
                                 if (state.buttonMessage == "Add") {
