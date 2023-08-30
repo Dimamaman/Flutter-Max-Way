@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/screens/main_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../core/floor/dao/dao.dart';
+import '../../../core/floor/dao/product_dao.dart';
 import '../../../core/floor/database/database.dart';
 import '../../../core/floor/entity/product_data.dart';
 import '../../../di/floor_module.dart';
@@ -219,7 +219,7 @@ class _CartPageState extends State<CartPage> {
                                                                   amount--;
                                                                   finalCost -= product.price;
                                                                   setState(() {});
-                                                                  widget._productDao.insertProduct(ProductData(
+                                                                  widget._productDao.updateProduct(ProductData(
                                                                       productId: product.productId,
                                                                       price: product.price,
                                                                       currency: product.currency,
@@ -241,7 +241,7 @@ class _CartPageState extends State<CartPage> {
                                                                 amount++;
                                                                 finalCost += product.price;
                                                                 setState(() {});
-                                                                widget._productDao.insertProduct(ProductData(
+                                                                widget._productDao.updateProduct(ProductData(
                                                                     productId: product.productId,
                                                                     price: product.price,
                                                                     currency: product.currency,

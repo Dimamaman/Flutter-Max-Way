@@ -8,3 +8,5 @@ class LocationModel {
   LocationModel(
       {this.cityName = "",this.street = "", this.regionName = "", this.lat = 0, this.long = 0});
 }
+
+

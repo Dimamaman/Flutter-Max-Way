@@ -42,15 +42,12 @@ class _MainScreenState extends State<MainScreen> {
     isLogged = await pref.getIsLogged();
     var temp = await getIt<AppDatabase>().productDao.getAllProducts();
     badges = temp.length;
-    print("RRRRRRR badges -> $badges");
     setState(() {});
-    print("PPPPPPPPPPPPP ${badges}");
     // await Future.delayed(const Duration(milliseconds: 2000));
   }
 
   @override
   Widget build(BuildContext context) {
-    print("NNNNNNNNNNN Main initState");
     return Consumer<BadgeProvider>(
       builder: (context, value, child) => Scaffold(
         backgroundColor: const Color(0xFFF6F6F6),

@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_max_way/presenter/utils/toast.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../../../core/floor/dao/dao.dart';
+import '../../../core/floor/dao/product_dao.dart';
 import '../../../core/model/model.dart';
 import '../../../core/floor/entity/product_data.dart';
 

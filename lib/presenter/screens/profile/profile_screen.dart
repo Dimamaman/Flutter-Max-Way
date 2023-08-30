@@ -4,6 +4,7 @@ import 'package:flutter_max_way/presenter/screens/about_the_service/about_the_se
 import 'package:flutter_max_way/presenter/screens/auth/phone.dart';
 import 'package:flutter_max_way/presenter/screens/branches/branches.dart';
 import 'package:flutter_max_way/presenter/screens/home/home_page.dart';
+import 'package:flutter_max_way/presenter/screens/my_address/my_address.dart';
 import 'package:flutter_max_way/presenter/screens/settings/settings.dart';
 
 import '../../pref/location_pref.dart';
@@ -70,23 +71,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        name,
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.01,
-                      ),
-                      Text(
-                        phone,
-                        style: TextStyle(fontSize: 17, color: Colors.grey[700]),
-                      ),
-                    ],
+                  Flexible(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          name,
+                          maxLines: 2,
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black,overflow: TextOverflow.ellipsis),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.01,
+                        ),
+                        Text(
+                          phone,
+                          style: TextStyle(fontSize: 17, color: Colors.grey[700]),
+                        ),
+                      ],
+                    ),
                   ),
                   IconButton(
                       onPressed: () {},
@@ -107,7 +111,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, CupertinoPageRoute(builder: (_) => const MyAddress()));
+                    },
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       height: MediaQuery.of(context).size.height * 0.1,
@@ -182,7 +188,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                   InkWell(
                     onTap: () {
-                      Navigator.push(context, CupertinoPageRoute(builder: (_) => SettingsScreen()));
+                      Navigator.push(context, CupertinoPageRoute(builder: (_) => const SettingsScreen()));
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 15),

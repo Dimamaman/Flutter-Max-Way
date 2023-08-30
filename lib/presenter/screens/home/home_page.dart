@@ -72,7 +72,6 @@ class _Home_PageState extends State<Home_Page> {
       builder: (context, state) {
         for(Category recommend in state.list) {
           if(recommend.title.uz.contains("Desertlar")) {
-            print("NNNNNNNNNNN Home initState");
             recommended = recommend;
           }
         }
@@ -89,7 +88,7 @@ class _Home_PageState extends State<Home_Page> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return const Map_Page();
+                                    return const MapScreen();
                                   },
                                 ),
                               );
@@ -118,7 +117,7 @@ class _Home_PageState extends State<Home_Page> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return const Map_Page();
+                                    return const MapScreen();
                                   },
                                 ),
                               );

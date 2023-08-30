@@ -11,14 +11,14 @@ import 'package:yandex_mapkit/yandex_mapkit.dart';
 import '../../../core/model/LocationModel.dart';
 import '../../utils/map_utils.dart';
 
-class Map_Page extends StatefulWidget {
-  const Map_Page({super.key});
+class MapScreen extends StatefulWidget {
+  const MapScreen({super.key});
 
   @override
-  State<Map_Page> createState() => _Map_PageState();
+  State<MapScreen> createState() => _MapScreenState();
 }
 
-class _Map_PageState extends State<Map_Page> {
+class _MapScreenState extends State<MapScreen> {
   final mapController = Completer<YandexMapController>();
   LocationModel _locationModel = LocationModel();
   var locationName = '';

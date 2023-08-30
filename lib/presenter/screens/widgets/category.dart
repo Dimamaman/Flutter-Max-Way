@@ -52,7 +52,7 @@ class CategoryItem extends StatelessWidget {
                         color: Colors.white,
                         child: InkWell(
                             onTap: () {
-                              isFirst ? Navigator.push(context, CupertinoPageRoute(builder: (context) => const Map_Page())) :
+                              isFirst ? Navigator.push(context, CupertinoPageRoute(builder: (context) => const MapScreen())) :
                               Navigator.push(context, CupertinoPageRoute(builder: (context) => DetailScreen(product: product,recommended: recommended)));
                             },
                             child: Padding(

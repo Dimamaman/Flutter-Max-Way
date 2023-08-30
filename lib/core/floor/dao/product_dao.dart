@@ -21,4 +21,7 @@ abstract class ProductDao {
 
   @Query('DELETE FROM ProductData')
   Future<void> deleteAll();
+
+  @update
+  Future<void> updateProduct(ProductData productData);
 }
