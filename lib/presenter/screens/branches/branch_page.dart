@@ -39,7 +39,7 @@ class _BranchPageState extends State<BranchPage> {
         backgroundColor: Colors.white,
         scrolledUnderElevation: 0,
         title: const Text(
-          'Filiallar',
+          'Branche',
           style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
         ),
       ),

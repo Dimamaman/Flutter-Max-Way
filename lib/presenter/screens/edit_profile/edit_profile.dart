@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_holo_date_picker/date_picker.dart';
 import 'package:flutter_holo_date_picker/date_picker_theme.dart';
 import 'package:flutter_holo_date_picker/i18n/date_picker_i18n.dart';
 import 'package:flutter_holo_date_picker/widget/date_picker_widget.dart';
+import 'package:flutter_max_way/presenter/screens/account_management/account_management.dart';
 import 'package:flutter_max_way/presenter/screens/main_screen.dart';
 import 'package:flutter_max_way/presenter/screens/profile/profile_screen.dart';
 import 'package:flutter_max_way/presenter/utils/toast.dart';
@@ -79,6 +81,7 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFFF6F6F6),
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -194,7 +197,9 @@ class _EditProfileState extends State<EditProfile> {
             ),
           ),
           TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, CupertinoPageRoute(builder: (_) => const AccountManagement()));
+              },
               child: const Text(
                 "Account Management",
                 style: TextStyle(color: Colors.indigoAccent),
