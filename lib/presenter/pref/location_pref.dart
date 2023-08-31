@@ -34,6 +34,16 @@ class LocationPref {
     return _prefs?.getString("phone") ?? "";
   }
 
+  Future<void> setDate(String date) async {
+    _prefs ??= await SharedPreferences.getInstance();
+    await _prefs?.setString("date", date);
+  }
+
+  Future<String> getDate() async {
+    _prefs ??= await SharedPreferences.getInstance();
+    return _prefs?.getString("date") ?? "";
+  }
+
   Future<void> setLang(bool lang) async {
     _prefs ??= await SharedPreferences.getInstance();
     await _prefs?.setBool("lang",lang);

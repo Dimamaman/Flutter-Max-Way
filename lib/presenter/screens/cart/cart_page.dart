@@ -30,7 +30,7 @@ class _CartPageState extends State<CartPage> {
 
   void _delete(String id) {
     try {
-      widget._productDao.deleteTodo(id);
+      widget._productDao.deleteProduct(id);
     } catch (e) {
       showToast(['$e'], context);
     }

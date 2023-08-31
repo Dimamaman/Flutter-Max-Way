@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/screens/about_the_service/about_the_service.dart';
 import 'package:flutter_max_way/presenter/screens/auth/phone.dart';
 import 'package:flutter_max_way/presenter/screens/branches/branches.dart';
+import 'package:flutter_max_way/presenter/screens/edit_profile/edit_profile.dart';
 import 'package:flutter_max_way/presenter/screens/home/home_page.dart';
 import 'package:flutter_max_way/presenter/screens/my_address/my_address.dart';
 import 'package:flutter_max_way/presenter/screens/settings/settings.dart';
@@ -30,27 +31,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() {});
   }
 
+  _readName() async {
+    return await pref.getName();
+  }
+
+  _readPhone() async {
+    return await pref.getPhone();
+  }
+
   @override
   void initState() {
+    setState(() {});
     next();
-    // next().then((value) =>
-    //     Navigator.pushReplacement(
-    //         context, MaterialPageRoute(builder: (_) => isLogged == true ? const ProfileScreen() : const MyPhone()))
-    // );
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      name = await _readName();
+      phone = await _readPhone();
+    });
+
+    print("NAME D -> $name}");
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    /*next().then((value) =>
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => isLogged == true ? const ProfileScreen() : const MyPhone()))
-    );*/
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      name = await _readName();
+      phone = await _readPhone();
+    });
     return WillPopScope(
       child: Scaffold(
         backgroundColor: const Color(0xFFF6F6F6),
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
           scrolledUnderElevation: 0,
           title: const Text(
@@ -93,7 +106,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, CupertinoPageRoute(builder: (_) => EditProfile()));
+                      },
                       icon: Icon(
                         Icons.edit_rounded,
                         size: 20,
@@ -112,7 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   InkWell(
                     onTap: () {
-                      Navigator.push(context, CupertinoPageRoute(builder: (_) => const MyAddress()));
+                      Navigator.push(context, CupertinoPageRoute(builder: (_) =>  MyAddress()));
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 15),

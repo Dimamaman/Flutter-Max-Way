@@ -14,4 +14,10 @@ abstract class AddressDao {
   @Insert(onConflict: OnConflictStrategy.replace)
   Future<void> insertAddress(Address address);
 
+  @Query('SELECT * FROM address')
+  Stream<List<Address>> streamedData();
+
+  @delete
+  Future<void> deleteAddress(Address address);
+
 }

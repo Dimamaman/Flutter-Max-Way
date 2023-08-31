@@ -128,7 +128,7 @@ class _AddAddressMapPageState extends State<AddAddressMapPage> {
                 Center(
                   child: Padding(
                       padding: const EdgeInsets.only(bottom: 30),
-                      child: SvgPicture.asset('assets/images/pin.svg',
+                      child: Image.asset('assets/images/marker.png',
                           height: 50)),
                 ),
                 Positioned(
