@@ -74,5 +74,15 @@ class LocationPref {
     return _prefs?.getBool('logged') ?? false;
   }
 
+  Future<void> setOrderNumber(int value) async {
+    _prefs ??= await SharedPreferences.getInstance();
+    await _prefs?.setInt('orderNumber', value);
+  }
+
+  Future<int> getOrderNumber() async {
+    _prefs ??= await SharedPreferences.getInstance();
+    return _prefs?.getInt('orderNumber') ?? 1;
+  }
+
 
 }

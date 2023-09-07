@@ -48,8 +48,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BadgeProvider>(
-      builder: (context, value, child) => Scaffold(
+    return Scaffold(
         backgroundColor: const Color(0xFFF6F6F6),
         body: IndexedStack(
           index: _currentIndex,
@@ -75,10 +74,10 @@ class _MainScreenState extends State<MainScreen> {
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: context.watch<BadgeProvider>().badgeValue > 0 ? Badge(
-                label: Text("${context.watch<BadgeProvider>().badgeValue}"),
+              icon: Badge(
+                label: Text("2"),
                 child: const Icon(Icons.shopping_cart),
-              ): const Icon(Icons.shopping_cart),
+              ),
               label: 'Cart'
             ),
             const BottomNavigationBarItem(
@@ -91,7 +90,6 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ],
         ),
-      ),
     );
   }
 }

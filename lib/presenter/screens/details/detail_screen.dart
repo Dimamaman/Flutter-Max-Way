@@ -558,7 +558,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                       context: context));
                                   bloc.add(LoadProduct(product: widget.product, alreadyHave: true));
                                   showToast(['Product added to Cart','Check the Cart'], context,gravity: ToastGravity.TOP);
-                                  context.read<BadgeProvider>().increment();
+                                  // context.read<BadgeProvider>().increment();
                                 }
                               },
                               child: Container(

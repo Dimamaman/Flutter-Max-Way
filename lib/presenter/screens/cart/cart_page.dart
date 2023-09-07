@@ -5,6 +5,7 @@ import 'package:floor/floor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/screens/main_screen.dart';
+import 'package:flutter_max_way/presenter/screens/making_order/order_detail_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/floor/dao/product_dao.dart';
@@ -301,7 +302,7 @@ class _CartPageState extends State<CartPage> {
                       borderRadius: BorderRadius.circular(10),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MainScreen()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => OrderDetailPage(list: widget.products)));
                         },
                         child: const SizedBox(
                             height: 54,

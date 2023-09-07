@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_max_way/presenter/screens/making_order/provider.dart';
 import 'package:flutter_max_way/presenter/screens/splash/splash_screen.dart';
 import 'package:flutter_max_way/presenter/utils/badges.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,7 @@ Future<void> main() async {
 
   runApp(
     ChangeNotifierProvider(
-      create: (context) => BadgeProvider(),
+      create: (context) => OrderDetailProvider(),
       child: const MyApp(),
     ),
   );

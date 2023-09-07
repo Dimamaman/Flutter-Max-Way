@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_max_way/presenter/screens/my_orders/pages/tab1.dart';
-import 'package:flutter_max_way/presenter/screens/my_orders/pages/tab2.dart';
+import 'package:flutter_max_way/presenter/screens/my_orders/pages/current_tab.dart';
+import 'package:flutter_max_way/presenter/screens/my_orders/pages/history_tab.dart';
 
 class MyOrdersScreen extends StatefulWidget {
   const MyOrdersScreen({Key? key}) : super(key: key);
@@ -78,7 +78,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
             Expanded(
               child: TabBarView(
                 controller: tabController,
-                children: const [
+                children:  [
                   Tab1(),
                   Tab2()
                 ],
