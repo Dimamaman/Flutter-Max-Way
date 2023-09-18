@@ -37,6 +37,8 @@ dependencies:
   fluttertoast: ^8.2.2
   maps_launcher: ^2.2.0
   flutter_holo_date_picker: ^1.1.0
+  internet_connection_checker: ^1.0.0+1
+  swipe_refresh: ^1.0.2
 
 
 dev_dependencies:

@@ -1,11 +1,11 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_max_way/presenter/screens/my_orders/pages/current_detail/order_detail.dart';
 
-import '../../../../core/floor/dao/order_dao.dart';
-import '../../../../core/floor/database/database.dart';
-import '../../../../di/floor_module.dart';
+import '../../../../../core/floor/dao/order_dao.dart';
+import '../../../../../core/floor/database/database.dart';
+import '../../../../../di/floor_module.dart';
+import 'current_detail/order_detail.dart';
 
 class Tab1 extends StatelessWidget {
   Tab1({Key? key}) : super(key: key);

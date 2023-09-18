@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_max_way/presenter/screens/widgets/product_search.dart';
 import 'package:flutter_max_way/presenter/screens/widgets/shimmer.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import '../../../core/api/food_api.dart';
 import '../../../core/model/model.dart';
@@ -177,7 +178,7 @@ class _Home_PageState extends State<Home_Page> {
                       decoration: InputDecoration(
                         focusedBorder: InputBorder.none,
                         enabledBorder: InputBorder.none,
-                        hintText: 'Qidirish',
+                        hintText: 'Search',
                         prefixIcon:
                             const Icon(Icons.search, color: Color(0xFFC4C4C4)),
                         hintStyle: const TextStyle(
@@ -277,9 +278,29 @@ class _Home_PageState extends State<Home_Page> {
                   }),
                 ),
                 Expanded(
+
                   child: Builder(builder: (context) {
                     if (state.status == EnumStatus.loading) {
                       return const SingleChildScrollView(child: ShimmerView());
+                    }
+
+                    if(state.status == EnumStatus.error) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("No Internet",style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
+
+                            const SizedBox(height: 20,),
+
+                            InkWell(onTap: () {
+                              bloc.add(LoadFoodEvent());
+                            },child: const Icon(Icons.refresh,size: 50,)),
+
+                            const SizedBox(height: 50),
+                          ],
+                        ),
+                      );
                     }
 
                     if (_searchController.text.isNotEmpty) {

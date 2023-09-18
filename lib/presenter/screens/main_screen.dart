@@ -9,6 +9,7 @@ import 'package:flutter_max_way/presenter/screens/my_orders/my_orders.dart';
 import 'package:flutter_max_way/presenter/screens/profile/profile_screen.dart';
 import 'package:flutter_max_way/presenter/utils/navigator.dart';
 import 'package:provider/provider.dart';
+import 'package:swipe_refresh/swipe_refresh.dart';
 
 import '../../di/floor_module.dart';
 import '../pref/location_pref.dart';

@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_max_way/presenter/screens/my_orders/pages/current_tab.dart';
-import 'package:flutter_max_way/presenter/screens/my_orders/pages/history_tab.dart';
+import 'package:flutter_max_way/presenter/screens/my_orders/pages/current/current_tab.dart';
+import 'package:flutter_max_way/presenter/screens/my_orders/pages/history/history_tab.dart';
 
 class MyOrdersScreen extends StatefulWidget {
   const MyOrdersScreen({Key? key}) : super(key: key);

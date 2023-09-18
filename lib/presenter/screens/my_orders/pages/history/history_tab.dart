@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'history_order_page.dart';
 
 class Tab2 extends StatelessWidget {
   const Tab2({Key? key}) : super(key: key);
@@ -26,7 +29,9 @@ class Tab2 extends StatelessWidget {
             clipBehavior: Clip.antiAlias,
             color: Colors.white,
             child: InkWell(
-              onTap: (){},
+              onTap: (){
+                // Navigator.push(context, CupertinoPageRoute(builder: (_) => HistoryOrderPage(orderEntity: ,)));
+              },
               child: Container(
                 padding: const EdgeInsets.all(15),
                 height: 90,
@@ -35,14 +40,14 @@ class Tab2 extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Buyurtma №123456', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                        const Text('Buyurtma №123456', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.lightBlue[50]
                           ),
-                          child: const Text('Buyurtma tugallandi', style: TextStyle(color: Colors.blue)),
+                          child: const Text('Order completed', style: TextStyle(color: Colors.blue)),
                         )
                       ],
                     ),

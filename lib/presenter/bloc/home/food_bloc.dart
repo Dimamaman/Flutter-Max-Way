@@ -5,6 +5,7 @@ import 'package:meta/meta.dart';
 
 import '../../../core/api/food_api.dart';
 import '../../../core/model/model.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 part 'food_event.dart';
 
@@ -36,9 +37,15 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
     emit(state.copyWith(status: EnumStatus.loading));
 
     var categoryName = <String>[];
-    var temp = await _api.getProducts();
-    for (Category category in temp) {
-      categoryName.add(category.title.uz);
+
+    bool result = await InternetConnectionChecker().hasConnection;
+    if(result == true) {
+      var temp = await _api.getProducts();
+      for (Category category in temp) {
+        categoryName.add(category.title.uz);
+      }
+    } else {
+      emit(state.copyWith(status: EnumStatus.error, message: "No Internet"));
     }
 
     try {
