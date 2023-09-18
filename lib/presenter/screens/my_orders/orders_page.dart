@@ -35,7 +35,7 @@ class _OrdersPageState extends State<OrdersPage> with SingleTickerProviderStateM
         scrolledUnderElevation: 0,
         centerTitle: true,
           title: const Text(
-            'Buyurtmalarim',
+            'My Orders',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
       ),
@@ -66,13 +66,13 @@ class _OrdersPageState extends State<OrdersPage> with SingleTickerProviderStateM
                   Tab(
                       child: Align(
                           alignment: Alignment.center,
-                          child: Text("Amaldagi buyurtmalar")
+                          child: Text("Current orders")
                       )
                   ),
                   Tab(
                       child: Align(
                           alignment: Alignment.center,
-                          child: Text("Buyurtmalar tarixi")
+                          child: Text("Order history")
                       )
                   ),
                 ],

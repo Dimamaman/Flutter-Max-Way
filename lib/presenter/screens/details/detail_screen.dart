@@ -358,6 +358,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             background: CachedNetworkImage(
                               imageUrl: widget.product.image,
                               fit: BoxFit.cover,
+                              placeholder: (context, url) => Image.asset('assets/images/placeholder.png', color: Colors.grey[400], fit: BoxFit.cover,),
                             ),
                           ),
                         ),

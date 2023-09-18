@@ -44,7 +44,7 @@ class _Tab2State extends State<Tab2> {
                       Image.asset(height: 120, 'assets/images/place_holder.png'),
                       const SizedBox(height: 20),
                       const Text(
-                        "Buyurtma mavjud emas",
+                        "Order not available",
                         style: TextStyle(color: Colors.grey),
                       ),
                       const SizedBox(

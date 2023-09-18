@@ -62,16 +62,16 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         items: [
-          const BottomNavigationBarItem(icon: Icon(CupertinoIcons.home), label: 'Asosiy'),
+          const BottomNavigationBarItem(icon: Icon(CupertinoIcons.home), label: 'Home'),
           BottomNavigationBarItem(
               icon: Badge(
                 label: Text('${list.length}'),
                 isLabelVisible: isNotEmpty,
                 child: const Icon(CupertinoIcons.cart),
               ),
-              label: 'Savatcha'),
-          const BottomNavigationBarItem(icon: Icon(CupertinoIcons.bag), label: 'Buyurtmalar'),
-          const BottomNavigationBarItem(icon: Icon(CupertinoIcons.person), label: 'Profil'),
+              label: 'Cart'),
+          const BottomNavigationBarItem(icon: Icon(CupertinoIcons.bag), label: 'Orders'),
+          const BottomNavigationBarItem(icon: Icon(CupertinoIcons.person), label: 'Profile'),
         ],
         onTap: _onItemTapped,
         selectedItemColor: const Color(0xff51267D),

@@ -48,7 +48,7 @@ class _OrderDeliveryTabState extends State<OrderDeliveryTab> {
 
   @override
   void initState() {
-    addressController.text = 'Manzil tanlang';
+    addressController.text = 'Select address';
     nameController.addListener(() {
       name = nameController.text;
     });
@@ -158,9 +158,9 @@ class _OrderDeliveryTabState extends State<OrderDeliveryTab> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Yetkazib berish', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+                    const Text('Delivery', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
                     const SizedBox(height: 10),
-                    const Text('Joriy manzil'),
+                    const Text('Current Address'),
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
@@ -230,7 +230,7 @@ class _OrderDeliveryTabState extends State<OrderDeliveryTab> {
                                   isDense: true,
                                   enabledBorder: InputBorder.none,
                                   focusedBorder: InputBorder.none,
-                                  hintText: 'Qavat',
+                                  hintText: 'Floor',
                                   hintStyle: const TextStyle(
                                       color: Colors.grey,
                                       fontSize: 15
@@ -259,7 +259,7 @@ class _OrderDeliveryTabState extends State<OrderDeliveryTab> {
                                   isDense: true,
                                   enabledBorder: InputBorder.none,
                                   focusedBorder: InputBorder.none,
-                                  hintText: 'Kvartira',
+                                  hintText: 'Apartment',
                                   hintStyle: const TextStyle(
                                       color: Colors.grey,
                                       fontSize: 15
@@ -342,7 +342,7 @@ class _OrderDeliveryTabState extends State<OrderDeliveryTab> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    const Text('Mening manzillarim'),
+                    const Text('My addresses'),
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.only(left: 12),
@@ -382,7 +382,7 @@ class _OrderDeliveryTabState extends State<OrderDeliveryTab> {
                   children: [
                     const Padding(
                       padding: EdgeInsets.only(top: 15,left: 15,right: 15),
-                      child: Text('Sizga kur`er qo\'ng\'iroq qilishini xohlaysizmi?', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+                      child: Text('Do you want the courier to call you?', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
                     ),
                     Material(
                       color: Colors.white,
@@ -400,7 +400,7 @@ class _OrderDeliveryTabState extends State<OrderDeliveryTab> {
                                 activeColor: Colors.deepPurple,
                               ),
                               const SizedBox(width: 10),
-                              const Expanded(child: Text('Ha'))
+                              const Expanded(child: Text('Yes'))
                             ],
                           ),
                         ),
@@ -423,7 +423,7 @@ class _OrderDeliveryTabState extends State<OrderDeliveryTab> {
                                 activeColor: Colors.deepPurple,
                               ),
                               const SizedBox(width: 10),
-                              const Expanded(child: Text('Yo\'q'))
+                              const Expanded(child: Text('No'))
                             ],
                           ),
                         ),
@@ -444,7 +444,7 @@ class _OrderDeliveryTabState extends State<OrderDeliveryTab> {
                   children: [
                     const Padding(
                       padding: EdgeInsets.only(top: 15,left: 15,right: 15),
-                      child: Text('Yetkazib berish usuli', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+                      child: Text('Delivery method', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
                     ),
                     Material(
                       color: Colors.white,
@@ -457,7 +457,7 @@ class _OrderDeliveryTabState extends State<OrderDeliveryTab> {
                               const SizedBox(width: 15),
                               SvgPicture.asset('assets/images/take_away.svg'),
                               const SizedBox(width: 10),
-                              const Expanded(child: Text('Tez yetkazib berish')),
+                              const Expanded(child: Text('Fast delivery')),
                               CupertinoRadio<DeliveryType>(
                                 value: DeliveryType.fast,
                                 groupValue: type,
@@ -482,7 +482,7 @@ class _OrderDeliveryTabState extends State<OrderDeliveryTab> {
                               const SizedBox(width: 15),
                               SvgPicture.asset('assets/images/courier.svg'),
                               const SizedBox(width: 10),
-                              const Expanded(child: Text('Jadval bo\'yicha yetkazib berish')),
+                              const Expanded(child: Text('Delivery according to schedule')),
                               CupertinoRadio<DeliveryType>(
                                 value: DeliveryType.scheduled,
                                 groupValue: type,
@@ -510,7 +510,7 @@ class _OrderDeliveryTabState extends State<OrderDeliveryTab> {
                   children: [
                     const Padding(
                       padding: EdgeInsets.only(top: 15,left: 15,right: 15),
-                      child: Text('To\'lov turi', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+                      child: Text('Payment type', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
                     ),
                     Material(
                       color: Colors.white,
@@ -526,7 +526,7 @@ class _OrderDeliveryTabState extends State<OrderDeliveryTab> {
                               const SizedBox(width: 15),
                               SvgPicture.asset('assets/images/cash.svg'),
                               const SizedBox(width: 10),
-                              const Expanded(child: Text('Naqd pul')),
+                              const Expanded(child: Text('Cash')),
                               CupertinoRadio<PaymentMethod>(
                                 value: PaymentMethod.cash,
                                 groupValue: method,
@@ -609,7 +609,7 @@ class _OrderDeliveryTabState extends State<OrderDeliveryTab> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Chek', style: TextStyle(fontWeight: FontWeight.bold)),
+                    const Text('Check', style: TextStyle(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 15),
                     SizedBox(
                       height: widget.list.length * 30,
@@ -633,7 +633,7 @@ class _OrderDeliveryTabState extends State<OrderDeliveryTab> {
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Yetkazib berish narxi", style: TextStyle(color: Colors.grey)),
+                        Text("Shipping cost", style: TextStyle(color: Colors.grey)),
                         Text('10 000 so\'m', style: TextStyle(color: Colors.grey))
                       ],
                     ),
@@ -641,7 +641,7 @@ class _OrderDeliveryTabState extends State<OrderDeliveryTab> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Umumiy narxi', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+                        const Text('Total price:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
                         Text('${widget.totalPrice+10000} so\'m', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
                       ],
                     )

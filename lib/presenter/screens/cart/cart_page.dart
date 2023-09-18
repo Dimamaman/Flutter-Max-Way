@@ -288,7 +288,7 @@ class _CartPageState extends State<CartPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          'Buyurtma narxi',
+                          'Order price',
                           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         Text(
@@ -307,7 +307,7 @@ class _CartPageState extends State<CartPage> {
                         },
                         child: const SizedBox(
                             height: 54,
-                            child: Center(child: Text('Buyurtmani rasmiylashtirish', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white)))),
+                            child: Center(child: Text('Order processing', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white)))),
                       ),
                     )
                   ],
@@ -321,7 +321,7 @@ class _CartPageState extends State<CartPage> {
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MainScreen()));
                     },
                     child: const SizedBox(
-                        height: 54, child: Center(child: Text('Mahsulot qo\'shing', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white)))),
+                        height: 54, child: Center(child: Text('Add product', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white)))),
                   ),
                 ),
         )

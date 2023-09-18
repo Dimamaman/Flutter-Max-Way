@@ -133,7 +133,7 @@ class _OrderTakeAwayTabState extends State<OrderTakeAwayTab> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Eng yaqin filiallar', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+                      const Text('Nearest branches', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
                       const SizedBox(height: 10),
                       SizedBox(
                         height: MediaQuery.of(context).size.height*0.22,
@@ -934,7 +934,7 @@ class _OrderTakeAwayTabState extends State<OrderTakeAwayTab> {
                                 const SizedBox(width: 15),
                                 SvgPicture.asset('assets/images/cash.svg'),
                                 const SizedBox(width: 10),
-                                const Expanded(child: Text('Naqd pul')),
+                                const Expanded(child: Text('Cash')),
                                 CupertinoRadio<PaymentMethod>(
                                   value: PaymentMethod.cash,
                                   groupValue: method,
@@ -1017,7 +1017,7 @@ class _OrderTakeAwayTabState extends State<OrderTakeAwayTab> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Chek', style: TextStyle(fontWeight: FontWeight.bold)),
+                      const Text('Check', style: TextStyle(fontWeight: FontWeight.bold)),
                       const SizedBox(height: 15),
                       SizedBox(
                         height: widget.list.length * 30,
@@ -1041,7 +1041,7 @@ class _OrderTakeAwayTabState extends State<OrderTakeAwayTab> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('Umumiy narxi', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+                          const Text('Total price', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
                           Text('${widget.totalPrice} so\'m', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
                         ],
                       )

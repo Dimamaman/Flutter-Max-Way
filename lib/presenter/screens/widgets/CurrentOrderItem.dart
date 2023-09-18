@@ -33,7 +33,7 @@ class CurrentOrderItem extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Buyurtma №${orderEntity.orderNo}',
+                  Text('Order №${orderEntity.orderNo}',
                       style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -41,7 +41,7 @@ class CurrentOrderItem extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.lightBlue[50]
                     ),
-                    child: Text(isReady?'Buyurtma tayyor':'Buyurtma rasmiylashtirildi', style: const TextStyle(color: Colors.blue, fontSize: 13)),
+                    child: Text(isReady?'The order is ready':'The order has been processed', style: const TextStyle(color: Colors.blue, fontSize: 13)),
                   )
                 ],
               ),

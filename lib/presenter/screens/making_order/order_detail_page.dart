@@ -83,8 +83,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> with SingleTickerProv
                         ),
                         controller: tabController,
                         tabs: const [
-                          Tab(child: Align(alignment: Alignment.center, child: Text("Yetkazib berish"))),
-                          Tab(child: Align(alignment: Alignment.center, child: Text("Olib ketish"))),
+                          Tab(child: Align(alignment: Alignment.center, child: Text("Delivery"))),
+                          Tab(child: Align(alignment: Alignment.center, child: Text("Take away"))),
                         ],
                       ),
                     ),
@@ -141,7 +141,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> with SingleTickerProv
                                   children: [
                                     const Center(
                                       child: Text(
-                                        'Diqqat!',
+                                        'Attention !',
                                         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                                       ),
                                     ),
@@ -149,7 +149,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> with SingleTickerProv
                                       height: 8,
                                     ),
                                     Text(
-                                      'Buyurtmangiz narxi: $totalPrice so\'m. Minimal buyurtma narxi 20000 so\'m bo\'lishi kerak.',
+                                      'Order price: $totalPrice so\'m. Minimum order price must be 20000 so\'m.',
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(fontSize: 14),
                                     ),
@@ -220,7 +220,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> with SingleTickerProv
                   },
                   child: SizedBox(
                       height: MediaQuery.of(context).size.height * 0.065,
-                      child: const Center(child: Text('Buyurtmani rasmiylashtirish', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white)))),
+                      child: const Center(child: Text('Order processing', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white)))),
                 ),
               ),
             )
