@@ -34,7 +34,7 @@ class _BranchesScreenState extends State<BranchesScreen> {
               appBar: AppBar(
                 backgroundColor: Colors.white,
                 title: const Text(
-                  "Filiallar",
+                  "Branches",
                   style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
                 ),
               ),
