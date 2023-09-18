@@ -1,17 +1,16 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/screens/my_orders/pages/current/current_tab.dart';
 import 'package:flutter_max_way/presenter/screens/my_orders/pages/history/history_tab.dart';
 
-class MyOrdersScreen extends StatefulWidget {
-  const MyOrdersScreen({Key? key}) : super(key: key);
+
+class OrdersPage extends StatefulWidget {
+  const OrdersPage({super.key});
 
   @override
-  State<MyOrdersScreen> createState() => _MyOrdersScreenState();
+  State<OrdersPage> createState() => _OrdersPageState();
 }
 
-class _MyOrdersScreenState extends State<MyOrdersScreen>
-    with SingleTickerProviderStateMixin {
+class _OrdersPageState extends State<OrdersPage> with SingleTickerProviderStateMixin{
   late TabController tabController;
 
   @override
@@ -25,15 +24,20 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
     tabController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('My Orders',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
         automaticallyImplyLeading: false,
-        centerTitle: true,
         backgroundColor: Colors.white,
+        scrolledUnderElevation: 0,
+        centerTitle: true,
+          title: const Text(
+            'Buyurtmalarim',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
       ),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -42,12 +46,12 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
             const SizedBox(height: 10),
             Container(
               height: 45,
-              width: MediaQuery.of(context).size.width * 0.9,
+              width: MediaQuery.of(context).size.width*0.9,
               decoration: BoxDecoration(
                   color: const Color(0xFFF5F5F5),
                   borderRadius: BorderRadius.circular(10)),
               child: TabBar(
-                padding: const EdgeInsets.all(3),
+                padding: const EdgeInsets.all(4),
                 indicatorSize: TabBarIndicatorSize.tab,
                 labelStyle: const TextStyle(fontSize: 13,fontWeight: FontWeight.bold),
                 unselectedLabelColor: Colors.grey,
@@ -55,20 +59,20 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
                 dividerColor: Colors.transparent,
                 indicator: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 controller: tabController,
                 tabs: const [
                   Tab(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text("Current orders")
-                    )
+                      child: Align(
+                          alignment: Alignment.center,
+                          child: Text("Amaldagi buyurtmalar")
+                      )
                   ),
                   Tab(
                       child: Align(
                           alignment: Alignment.center,
-                          child: Text("History of orders")
+                          child: Text("Buyurtmalar tarixi")
                       )
                   ),
                 ],
@@ -78,7 +82,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
             Expanded(
               child: TabBarView(
                 controller: tabController,
-                children:  [
+                children: [
                   Tab1(),
                   Tab2()
                 ],

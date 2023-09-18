@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_max_way/presenter/screens/home/home_page.dart';
-import 'package:flutter_max_way/presenter/screens/main_screen.dart';
 
 import '../../pref/location_pref.dart';
+import '../main_page.dart';
 
 class SelectLang extends StatefulWidget {
   const SelectLang({Key? key}) : super(key: key);
@@ -118,7 +117,7 @@ class _SelectLangState extends State<SelectLang> {
                   borderRadius: BorderRadius.circular(10),
                   onTap: () {
                     pref.setLang(true);
-                    Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => MainScreen()));
+                    Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => const MainScreen()));
                   },
                   child: Container(
                     width: double.infinity,

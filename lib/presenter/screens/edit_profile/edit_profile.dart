@@ -5,14 +5,13 @@ import 'package:flutter_holo_date_picker/date_picker_theme.dart';
 import 'package:flutter_holo_date_picker/i18n/date_picker_i18n.dart';
 import 'package:flutter_holo_date_picker/widget/date_picker_widget.dart';
 import 'package:flutter_max_way/presenter/screens/account_management/account_management.dart';
-import 'package:flutter_max_way/presenter/screens/main_screen.dart';
-import 'package:flutter_max_way/presenter/screens/profile/profile_screen.dart';
 import 'package:flutter_max_way/presenter/utils/toast.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../pref/location_pref.dart';
+import '../main_page.dart';
 import '../widgets/my_bottomsheet.dart';
 
 class EditProfile extends StatefulWidget {

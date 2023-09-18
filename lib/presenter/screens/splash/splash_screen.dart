@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_max_way/presenter/screens/main_screen.dart';
 import 'package:flutter_max_way/presenter/screens/select_lang/select_lang.dart';
 
 import '../../pref/location_pref.dart';
+import '../main_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

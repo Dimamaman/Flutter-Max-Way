@@ -9,7 +9,7 @@ import 'package:flutter_max_way/presenter/screens/my_address/my_address.dart';
 import 'package:flutter_max_way/presenter/screens/settings/settings.dart';
 
 import '../../pref/location_pref.dart';
-import '../main_screen.dart';
+import '../main_page.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -292,7 +292,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       onWillPop: () async {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => MainScreen()));
+            context, MaterialPageRoute(builder: (_) => const MainScreen()));
         print("WWWWWWWWWWW onWillPop");
         return true;
       },

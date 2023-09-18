@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/pref/location_pref.dart';
 import 'package:flutter_max_way/presenter/screens/home/home_page.dart';
-import 'package:flutter_max_way/presenter/screens/main_screen.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 import '../../../core/model/LocationModel.dart';
 import '../../utils/map_utils.dart';
+import '../main_page.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -186,7 +186,7 @@ class _MapScreenState extends State<MapScreen> {
                         Navigator.pop(context);
                         Navigator.pushReplacement(context,
                             MaterialPageRoute(builder: (context) {
-                              return MainScreen();
+                              return const MainScreen();
                             }));
                       },
                       child: Container(

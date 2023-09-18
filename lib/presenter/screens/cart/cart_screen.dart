@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_max_way/presenter/bloc/cart/cart_bloc.dart';
-import 'package:flutter_max_way/presenter/screens/main_screen.dart';
 import '../../../core/floor/dao/product_dao.dart';
 import '../../../core/floor/database/database.dart';
 import '../../../core/floor/entity/product_data.dart';

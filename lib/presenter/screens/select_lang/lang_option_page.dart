@@ -1,9 +1,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_max_way/presenter/screens/main_screen.dart';
 
 import '../../pref/location_pref.dart';
+import '../main_page.dart';
 
 
 class LangOptionPage extends StatelessWidget {

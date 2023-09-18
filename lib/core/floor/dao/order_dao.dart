@@ -4,14 +4,21 @@ import 'package:flutter_max_way/core/floor/entity/order_entity.dart';
 
 @dao
 abstract class OrderDao {
+  @Query('SELECT * FROM OrderEntity where isCompleted = 0')
+  Future<List<OrderEntity>> getAllCurrentOrders();
 
-  @Query('SELECT * FROM OrderEntity')
-  Future<List<OrderEntity>> getAllOrders();
+  @Query('SELECT * FROM OrderEntity where isCompleted = 0')
+  Stream<List<OrderEntity>> streamedDataCurrent();
+
+  @Query('SELECT * FROM OrderEntity where isCompleted = 1')
+  Future<List<OrderEntity>> getAllHistoryOrders();
+
+  @Query('SELECT * FROM OrderEntity where isCompleted = 1')
+  Stream<List<OrderEntity>> streamedDataHistory();
 
   @Insert(onConflict: OnConflictStrategy.replace)
   Future<void> insertOrder(OrderEntity order);
 
-  @Query('SELECT * FROM OrderEntity')
-  Stream<List<OrderEntity>> streamedData();
-
+  @update
+  Future<void> updateOrder(OrderEntity order);
 }

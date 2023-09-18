@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/pref/location_pref.dart';
-import 'package:flutter_max_way/presenter/screens/main_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../core/floor/database/database.dart';
 import '../../../di/floor_module.dart';
+import '../main_page.dart';
 import '../widgets/my_bottomsheet.dart';
 
 class SettingsScreen extends StatefulWidget {

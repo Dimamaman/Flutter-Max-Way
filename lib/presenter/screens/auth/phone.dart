@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/screens/auth/verify.dart';
-import 'package:flutter_max_way/presenter/screens/main_screen.dart';
 
 import '../home/home_page.dart';
+import '../main_page.dart';
 import '../splash/splash_screen.dart';
 
 class MyPhone extends StatefulWidget {
@@ -195,7 +195,7 @@ class _MyPhoneState extends State<MyPhone> {
       ),
       onWillPop: () async {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => MainScreen()));
+            context, MaterialPageRoute(builder: (_) => const MainScreen()));
         print("WWWWWWWWWWW onWillPop");
         return true;
       },

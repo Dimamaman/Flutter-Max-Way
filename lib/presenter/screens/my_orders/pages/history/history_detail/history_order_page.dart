@@ -1,6 +1,9 @@
+
 import 'package:flutter/material.dart';
 
-import '../../../../../core/floor/entity/order_entity.dart';
+import '../../../../../../core/floor/entity/order_entity.dart';
+import '../../../../../utils/toast.dart';
+
 
 class HistoryOrderPage extends StatefulWidget {
 
@@ -23,9 +26,9 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
       appBar: AppBar(
         scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
-        title: const Text(
-          'Current order',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        title: Text(
+          'Buyurtma № ${widget._orderEntity.orderNo}',
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
       ),
       body: Column(
@@ -43,7 +46,7 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Order №${widget._orderEntity.orderNo}',
+                      Text('Buyurtma № ${widget._orderEntity.orderNo}',
                           style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -51,7 +54,7 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.lightBlue[50]
                         ),
-                        child: const Text('Order completed', style: TextStyle(color: Colors.blue, fontSize: 13)),
+                        child: const Text('Buyurtma tugallandi', style: TextStyle(color: Colors.blue, fontSize: 13)),
                       )
                     ],
                   ),
@@ -60,16 +63,11 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
 
                   Row(
                     children: [
-
                       const Icon(Icons.location_on_outlined,color: Colors.grey,),
-
                       const SizedBox(width: 10,),
-
-                      const Text('Address', style: TextStyle(fontSize: 14,color: Colors.grey)),
-
+                      const Text('Manzil', style: TextStyle(fontSize: 14,color: Colors.grey)),
                       const Spacer(),
-
-                      SizedBox(width: 270, child: Text(widget._orderEntity.branch.split('#')[1], maxLines: 2, textAlign: TextAlign.right, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15))),
+                      SizedBox(width: 270, child: Text(widget._orderEntity.address, maxLines: 2, textAlign: TextAlign.right, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15))),
                     ],
                   ),
 
@@ -77,15 +75,10 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
 
                   Row(
                     children: [
-
                       const Icon(Icons.access_time,color: Colors.grey,),
-
                       const SizedBox(width: 10,),
-
-                      const Text('Time', style: TextStyle(fontSize: 14,color: Colors.grey)),
-
+                      const Text('Vaqt', style: TextStyle(fontSize: 14,color: Colors.grey)),
                       const Spacer(),
-
                       Text(widget._orderEntity.time, style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 15)),
                     ],
                   ),
@@ -94,15 +87,10 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
 
                   Row(
                     children: [
-
                       const Icon(Icons.date_range,color: Colors.grey,),
-
                       const SizedBox(width: 10,),
-
-                      const Text('Date', style: TextStyle(fontSize: 14,color: Colors.grey)),
-
+                      const Text('Sana', style: TextStyle(fontSize: 14,color: Colors.grey)),
                       const Spacer(),
-
                       Text(widget._orderEntity.date, style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 15)),
                     ],
                   ),
@@ -111,15 +99,10 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
 
                   Row(
                     children: [
-
                       const Icon(Icons.payment,color: Colors.grey,),
-
                       const SizedBox(width: 10,),
-
-                      const Text("Payment method", style: TextStyle(fontSize: 14,color: Colors.grey)),
-
+                      const Text("To'lov usuli", style: TextStyle(fontSize: 14,color: Colors.grey)),
                       const Spacer(),
-
                       Text(widget._orderEntity.payment, style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 15)),
                     ],
                   ),
@@ -138,7 +121,7 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Check', style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text('Chek', style: TextStyle(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 15),
                 SizedBox(
                     height: products.length * 30,
@@ -165,7 +148,7 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Total price', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+                    const Text('Umumiy narx', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
                     Text('${widget._orderEntity.price} so\'m', style: const TextStyle(fontSize: 17,color: Colors.grey))
                   ],
                 )
@@ -183,11 +166,15 @@ class _HistoryOrderPageState extends State<HistoryOrderPage> {
               color: const Color(0xff51267D),
               borderRadius: BorderRadius.circular(10),
               child: InkWell(
-                onTap: () async {},
+                onTap: () {
+                  reOrder(widget._orderEntity);
+                  showToast(['Muvaffaqiyatli'], context);
+                  Navigator.pop(context);
+                },
                 child: SizedBox(
                     height: MediaQuery.of(context).size.height*0.065,
                     child: const Center(
-                        child: Text('Repeat the order', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white)))),
+                        child: Text('Buyurtmani takrorlang', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white)))),
               ),
             ),
           )

@@ -1,77 +1,75 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'history_order_page.dart';
+import '../../../../../core/floor/dao/order_dao.dart';
+import '../../../../../core/floor/database/database.dart';
+import '../../../../../di/floor_module.dart';
+import '../../../widgets/HistoryOrderItem.dart';
 
-class Tab2 extends StatelessWidget {
+class Tab2 extends StatefulWidget {
   const Tab2({Key? key}) : super(key: key);
 
   @override
+  State<Tab2> createState() => _Tab2State();
+}
+
+class _Tab2State extends State<Tab2> {
+  final _dao = getIt<AppDatabase>().orderDao;
+
+  Future<OrderDao> _callDao() async {
+    return _dao;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF6F6F6),
-/*      body: Center(child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(height: 120,'assets/images/place_holder.png'),
-          const SizedBox(height: 20),
-          const Text("Buyurtma mavjud emas",style: TextStyle(color: Colors.grey),),
-          const SizedBox(height: 50,)
-        ],
-      ))*/
-      body: ListView.separated(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        itemCount: 5,
-        separatorBuilder: (context, index) => const SizedBox(height: 10),
-        itemBuilder: (context, index) {
-          return Material(
-            borderRadius: BorderRadius.circular(10),
-            clipBehavior: Clip.antiAlias,
-            color: Colors.white,
-            child: InkWell(
-              onTap: (){
-                // Navigator.push(context, CupertinoPageRoute(builder: (_) => HistoryOrderPage(orderEntity: ,)));
-              },
-              child: Container(
-                padding: const EdgeInsets.all(15),
-                height: 90,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Buyurtma №123456', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                        Container(
-                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.lightBlue[50]
-                          ),
-                          child: const Text('Order completed', style: TextStyle(color: Colors.blue)),
-                        )
-                      ],
-                    ),
-                    const Expanded(child: SizedBox()),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('12 000 so\'m', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                        Row(
-                          children: [
-                            Icon(Icons.date_range_rounded, size: 15,color: Colors.grey[600]),
-                            const SizedBox(width: 3),
-                            Text('05.09.2023', style: TextStyle(color: Colors.grey[600], fontSize: 15))
-                          ],
-                        )
-                      ],
-                    )
-                  ],
+    return FutureBuilder(
+      future: _callDao(),
+      builder: (context, snapshot) {
+        return StreamBuilder(
+          stream: snapshot.data?.streamedDataHistory(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData || snapshot.connectionState == ConnectionState.none) {
+              return Container(
+                color: const Color(0xFFF6F6F6),
+                child: const Center(child: CupertinoActivityIndicator()),
+              );
+            } else {
+              if (snapshot.data!.isEmpty) {
+                return Container(
+                  color: const Color(0xFFF6F6F6),
+                  child: Center(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(height: 120, 'assets/images/place_holder.png'),
+                      const SizedBox(height: 20),
+                      const Text(
+                        "Buyurtma mavjud emas",
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      )
+                    ],
+                  )),
+                );
+              }
+              return Scaffold(
+                backgroundColor: const Color(0xFFF6F6F6),
+                body: ListView.separated(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  itemCount: snapshot.data!.length,
+                  separatorBuilder: (context, index) => const SizedBox(height: 10),
+                  itemBuilder: (context, index) {
+                    return HistoryOrderItem(orderEntity: snapshot.data![index]);
+                  },
                 ),
-              ),
-            ),
-          );
-        },
-      ),
+              );
+            }
+          }
+        );
+      },
     );
   }
 }

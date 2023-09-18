@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../main_screen.dart';
+import '../main_page.dart';
+
 
 class AccountManagement extends StatefulWidget {
   const AccountManagement({super.key});

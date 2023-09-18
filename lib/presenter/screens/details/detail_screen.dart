@@ -18,7 +18,7 @@ import '../../utils/toast.dart';
 import '../cart/cart_page.dart';
 import '../cart/cart_screen.dart';
 import '../cart/cart_screen.dart';
-import '../main_screen.dart';
+import '../main_page.dart';
 
 class DetailScreen extends StatefulWidget {
   final Product product;

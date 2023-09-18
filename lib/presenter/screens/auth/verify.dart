@@ -2,11 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_max_way/presenter/screens/auth/phone.dart';
-import 'package:flutter_max_way/presenter/screens/main_screen.dart';
 import 'package:flutter_max_way/presenter/screens/splash/splash_screen.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../pref/location_pref.dart';
+import '../main_page.dart';
 
 class MyVerify extends StatefulWidget {
   String name;
@@ -123,7 +123,7 @@ class _MyVerifyState extends State<MyVerify> {
                           pref.setIsLogged(true);
                           pref.setName(widget.name);
                           pref.setPhone(widget.phone);
-                          Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => MainScreen()));
+                          Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => const MainScreen()));
 
                         } catch (e) {
                           print("Qatelik: $e");

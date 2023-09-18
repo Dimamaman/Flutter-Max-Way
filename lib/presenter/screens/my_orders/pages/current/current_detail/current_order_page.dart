@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_max_way/core/floor/entity/order_entity.dart';
 
-class OrderItem extends StatefulWidget {
+import '../../../../../../core/floor/entity/order_entity.dart';
+
+class CurrentOrderPage extends StatefulWidget {
 
   final OrderEntity _orderEntity;
+  final bool? isReady;
 
-  const OrderItem({super.key, required OrderEntity orderEntity}) : _orderEntity = orderEntity;
+  const CurrentOrderPage({super.key, required OrderEntity orderEntity, this.isReady}) : _orderEntity = orderEntity;
 
   @override
-  State<OrderItem> createState() => _OrderItemState();
+  State<CurrentOrderPage> createState() => _CurrentOrderPageState();
 }
 
-class _OrderItemState extends State<OrderItem> {
+class _CurrentOrderPageState extends State<CurrentOrderPage> {
   @override
   Widget build(BuildContext context) {
 
@@ -23,8 +25,8 @@ class _OrderItemState extends State<OrderItem> {
         scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
         title: const Text(
-          'Current order',
-          style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+          'Amaldagi buyurtma',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
       ),
       body: Column(
@@ -37,13 +39,12 @@ class _OrderItemState extends State<OrderItem> {
             color: Colors.white,
             child: Container(
               padding: const EdgeInsets.all(15),
-              height: 290,
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Buyurtma №${widget._orderEntity.orderNo}',
+                      Text('Buyurtma № ${widget._orderEntity.orderNo}',
                           style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -51,7 +52,7 @@ class _OrderItemState extends State<OrderItem> {
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.lightBlue[50]
                         ),
-                        child: const Text('Buyurtma rasmiylashtirildi', style: TextStyle(color: Colors.blue, fontSize: 13)),
+                        child: Text(widget.isReady! ? 'Buyurtma tayyor': 'Buyurtma rasmiylashtirildi', style: const TextStyle(color: Colors.blue, fontSize: 13)),
                       )
                     ],
                   ),
@@ -80,19 +81,18 @@ class _OrderItemState extends State<OrderItem> {
                           child: Image.asset('assets/images/chef_hat.png', color: Colors.white),
                         )),
                       ),
-                      const Expanded(child: Divider(thickness: 2, color: Color(0xff51267D),)),
+                      Expanded(child: Divider(thickness: 2, color: widget.isReady! ? const Color(0xff51267D) : const Color(0xFFF6F6F6))),
                       Container(
                         height: 60,
                         width: 60,
                         decoration: BoxDecoration(
-                            color:  const Color(
-                                0xff51267D),
+                            color:  widget.isReady! ? const Color(0xff51267D) : const Color(0xFFF6F6F6),
                             borderRadius: BorderRadius.circular(50)
                         ),
                         child: Center(child: Padding(
                           padding: const EdgeInsets.all(17),
                           child: Image.asset('assets/images/flag.png',
-                              color: Colors.white),
+                              color: widget.isReady! ? Colors.white : const Color(0xff51267D)),
                         )),
                       ),
                     ],
@@ -100,34 +100,39 @@ class _OrderItemState extends State<OrderItem> {
 
                   const SizedBox(height: 20,),
 
-                  Row(
-                    children: [
-
-                      const Icon(Icons.location_on_outlined,color: Colors.grey,),
-
-                      const SizedBox(width: 10,),
-
-                      const Text('Branch', style: TextStyle(fontSize: 12,color: Colors.grey)),
-
-                      const Spacer(),
-
-                      Text(widget._orderEntity.branch, style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 15)),
-                    ],
+                  Builder(
+                    builder: (context) {
+                      if(widget._orderEntity.branch.isNotEmpty){
+                        return Row(
+                          children: [
+                            const Icon(Icons.location_on_outlined,color: Colors.grey,),
+                            const SizedBox(width: 10,),
+                            const Text('Filial', style: TextStyle(fontSize: 14,color: Colors.grey)),
+                            const Spacer(),
+                            SizedBox(width: 270, child: Text(widget._orderEntity.branch, maxLines: 2, textAlign: TextAlign.right, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15))),
+                          ],
+                        );
+                      }
+                      return Row(
+                        children: [
+                          const Icon(Icons.location_on_outlined,color: Colors.grey,),
+                          const SizedBox(width: 10,),
+                          const Text('Manzil', style: TextStyle(fontSize: 14,color: Colors.grey)),
+                          const Spacer(),
+                          SizedBox(width: 270, child: Text(widget._orderEntity.address, maxLines: 2, textAlign: TextAlign.right, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15))),
+                        ],
+                      );
+                    }
                   ),
 
                   const SizedBox(height: 10,),
 
                   Row(
                     children: [
-
                       const Icon(Icons.access_time,color: Colors.grey,),
-
                       const SizedBox(width: 10,),
-
-                      const Text('Time', style: TextStyle(fontSize: 12,color: Colors.grey)),
-
+                      const Text('Vaqt', style: TextStyle(fontSize: 14,color: Colors.grey)),
                       const Spacer(),
-
                       Text(widget._orderEntity.time, style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 15)),
                     ],
                   ),
@@ -136,15 +141,10 @@ class _OrderItemState extends State<OrderItem> {
 
                   Row(
                     children: [
-
                       const Icon(Icons.date_range,color: Colors.grey,),
-
                       const SizedBox(width: 10,),
-
-                      const Text('Date', style: TextStyle(fontSize: 12,color: Colors.grey)),
-
+                      const Text('Sana', style: TextStyle(fontSize: 14,color: Colors.grey)),
                       const Spacer(),
-
                       Text(widget._orderEntity.date, style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 15)),
                     ],
                   ),
@@ -153,19 +153,13 @@ class _OrderItemState extends State<OrderItem> {
 
                   Row(
                     children: [
-
                       const Icon(Icons.payment,color: Colors.grey,),
-
                       const SizedBox(width: 10,),
-
-                      const Text("Payment method", style: TextStyle(fontSize: 12,color: Colors.grey)),
-
+                      const Text("To'lov usuli", style: TextStyle(fontSize: 14,color: Colors.grey)),
                       const Spacer(),
-
                       Text(widget._orderEntity.payment, style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 15)),
                     ],
                   ),
-
                 ],
               ),
             ),
@@ -180,13 +174,13 @@ class _OrderItemState extends State<OrderItem> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Check', style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text('Chek', style: TextStyle(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 15),
                 SizedBox(
                     height: products.length * 30,
                     child: ListView.separated(
                       physics: const NeverScrollableScrollPhysics(),
-                      separatorBuilder: (context, index) => SizedBox(height: 10,),
+                      separatorBuilder: (context, index) => const SizedBox(height: 10,),
                       itemCount: products.length,
                       itemBuilder: (context, index) {
                         final data = products[index];
@@ -207,7 +201,7 @@ class _OrderItemState extends State<OrderItem> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Total Price', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+                    const Text('Umumiy narx', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
                     Text('${widget._orderEntity.price} so\'m', style: const TextStyle(fontSize: 17,color: Colors.grey))
                   ],
                 )

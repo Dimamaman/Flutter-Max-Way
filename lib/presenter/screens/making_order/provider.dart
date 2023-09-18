@@ -1,18 +1,22 @@
 import 'package:flutter/cupertino.dart';
 
-class OrderDetailProvider extends ChangeNotifier{
-
-  var branchName = 'MAX WAY MEGA PLANET';
+class OrderDetailProvider extends ChangeNotifier {
+  var branch = '';
+  var address = '';
   var paymentMethod = 'Naqd pul';
 
-  void updateBranchName(String name){
-    branchName = name;
+  void updateBranch(String branchName) {
+    branch = branchName;
     notifyListeners();
   }
 
-  void updatePaymentMethod(String method){
+  void updateAddress(String newAddress) {
+    address = newAddress;
+    notifyListeners();
+  }
+
+  void updatePaymentMethod(String method) {
     paymentMethod = method;
     notifyListeners();
   }
-
 }

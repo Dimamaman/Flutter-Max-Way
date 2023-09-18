@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:floor/floor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_max_way/presenter/screens/main_screen.dart';
 import 'package:flutter_max_way/presenter/screens/making_order/order_detail_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -13,6 +12,8 @@ import '../../../core/floor/database/database.dart';
 import '../../../core/floor/entity/product_data.dart';
 import '../../../di/floor_module.dart';
 import '../../utils/toast.dart';
+import '../main_page.dart';
+import '../making_order/order_detail_page.dart';
 
 class CartPage extends StatefulWidget {
   CartPage({super.key});
